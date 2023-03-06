@@ -1,3 +1,14 @@
 from django.db import models
 
-# Create your models here.
+
+class Review(models.Model):
+    user = models.ForeignKey("user.User", models.DO_NOTHING)
+    crs = models.ForeignKey("course.Course", models.DO_NOTHING)
+    start = models.IntegerField()
+    content = models.TextField()
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = "review"

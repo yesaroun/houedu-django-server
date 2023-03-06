@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "user.apps.UserConfig",
+    "teacher.apps.TeacherConfig",
+    "course.apps.CourseConfig",
+    "lecture.apps.LectureConfig",
+    "review.apps.ReviewConfig",
 ]
 
 MIDDLEWARE = [

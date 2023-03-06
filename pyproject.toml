@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "houedu-django-server"
+version = "0.1.0"
+description = ""
+authors = ["yesaroun <akor1@naver.com>"]
+readme = "README.md"
+packages = [{include = "houedu_django_server"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+django = "^4.1.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+

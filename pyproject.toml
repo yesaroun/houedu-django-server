@@ -9,6 +9,8 @@ packages = [{include = "houedu_django_server"}]
 [tool.poetry.dependencies]
 python = "^3.9"
 django = "^4.1.7"
+mysqlclient = "^2.1.1"
+pymysql = "^1.0.2"
 
 
 [build-system]

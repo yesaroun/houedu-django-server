@@ -38,10 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "user.apps.UserConfig",
-    "teacher.apps.TeacherConfig",
-    "course.apps.CourseConfig",
-    "lecture.apps.LectureConfig",
-    "review.apps.ReviewConfig",
+    "courses.apps.CoursesConfig",
 ]
 
 MIDDLEWARE = [
@@ -89,6 +86,7 @@ DATABASES = {
         "PASSWORD": "12345678",
         "HOST": "database.csdemtmg3fgy.ap-northeast-2.rds.amazonaws.com",
         "PORT": "3306",
+        # "OPTIONS": {"init_command": "SET innodb_strict_mode=1"},
     }
 }
 

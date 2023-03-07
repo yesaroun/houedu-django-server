@@ -10,3 +10,13 @@ class User(models.Model):
     class Meta:
         managed = False
         db_table = "user"
+
+
+class Teacher(models.Model):
+    user = models.ForeignKey("User", models.DO_NOTHING, blank=True, null=True)
+    tcr_name = models.CharField(max_length=50)
+    tcr_info = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = "teacher"

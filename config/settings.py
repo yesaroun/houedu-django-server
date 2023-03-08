@@ -139,4 +139,4 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-APPROVED_HOSTS = ["172.31.57.152"]
+APPROVED_HOSTS = ["3.36.129.105"]

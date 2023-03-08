@@ -2,6 +2,9 @@ from django.db import models
 
 
 class Course(models.Model):
+
+    """Courses를 정의한 모델"""
+
     tcr = models.ForeignKey("user.Teacher", models.DO_NOTHING, blank=True, null=True)
     crs_name = models.CharField(max_length=50)
     crs_info = models.TextField(blank=True, null=True)
@@ -14,6 +17,9 @@ class Course(models.Model):
 
 
 class Lecture(models.Model):
+
+    """Lectures를 정의한 모델"""
+
     crs = models.ForeignKey(Course, models.DO_NOTHING, blank=True, null=True)
     lctr_name = models.CharField(max_length=50)
     lctr_source = models.TextField()
@@ -25,6 +31,9 @@ class Lecture(models.Model):
 
 
 class Review(models.Model):
+
+    """Reviews를 정의한 모델"""
+
     user = models.ForeignKey("user.User", models.DO_NOTHING, blank=True, null=True)
     crs = models.ForeignKey(Course, models.DO_NOTHING, blank=True, null=True)
     star = models.IntegerField(blank=True, null=True)

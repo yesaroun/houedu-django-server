@@ -1,5 +1,6 @@
 import datetime
 from django.db import models
+from courses.models import Course
 
 
 class User(models.Model):
@@ -13,7 +14,7 @@ class User(models.Model):
 
     class Meta:
         managed = False
-        db_table = "user"
+        db_table = "users"
 
 
 class Teacher(models.Model):
@@ -27,3 +28,11 @@ class Teacher(models.Model):
     class Meta:
         managed = False
         db_table = "teacher"
+
+
+# class UserCourse(models.Model):
+#
+#     """user의 수강 정보를 정의한 모델"""
+#
+#     user_id: User = models.ForeignKey("User", models.DO_NOTHING, blank=True, null=True)
+#     course_id: Course = models.ForeignKey("courses.Course")

@@ -1,8 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractBaseUser
 
 
-class User(AbstractUser):
+class User(AbstractBaseUser):
 
     """users를 정의한 모델"""
 
@@ -14,8 +14,8 @@ class User(AbstractUser):
     nickname: str = models.CharField(unique=True, max_length=50, blank=True, null=True)
 
     class Meta:
-        managed = True
-        db_table = "users"
+        managed = False
+        db_table = "user"
 
 
 class Teacher(models.Model):

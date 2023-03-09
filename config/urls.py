@@ -5,4 +5,5 @@ import courses
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("courses/", include("courses.urls")),
+    path("users/", include("users.urls")),
 ]

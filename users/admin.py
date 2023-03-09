@@ -1,13 +1,9 @@
-from django.contrib import admin
 from .models import User, Teacher
 
 
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
+from django.contrib import admin
 
-    """User 관련 admin 패널 세팅"""
-
-    pass
+admin.site.register(User)
 
 
 @admin.register(Teacher)

@@ -1,6 +1,5 @@
 import datetime
 from django.db import models
-from courses.models import Course
 
 
 class User(models.Model):
@@ -21,7 +20,7 @@ class Teacher(models.Model):
 
     """teachers를 정의한 모델"""
 
-    user: User = models.ForeignKey("User", models.DO_NOTHING, blank=True, null=True)
+    user: User = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
     tcr_name: str = models.CharField(max_length=50)
     tcr_info: str = models.TextField(blank=True, null=True)
 
@@ -30,9 +29,24 @@ class Teacher(models.Model):
         db_table = "teacher"
 
 
-# class UserCourse(models.Model):
-#
-#     """user의 수강 정보를 정의한 모델"""
-#
-#     user_id: User = models.ForeignKey("User", models.DO_NOTHING, blank=True, null=True)
-#     course_id: Course = models.ForeignKey("courses.Course")
+class UserCourse(models.Model):
+    user = models.ForeignKey(User, models.DO_NOTHING)
+    course = models.ForeignKey("courses.Course", models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = "user_course"
+
+
+class VideoWatches(models.Model):
+    user = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
+    lecture = models.ForeignKey(
+        "courses.Lecture", models.DO_NOTHING, blank=True, null=True
+    )
+    isfullywatched = models.IntegerField(
+        db_column="isFullyWatched", blank=True, null=True
+    )  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = "video_watches"

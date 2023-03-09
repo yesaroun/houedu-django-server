@@ -1,6 +1,8 @@
 import datetime
 from django.db import models
 
+import courses.models
+
 
 class User(models.Model):
 
@@ -30,8 +32,10 @@ class Teacher(models.Model):
 
 
 class UserCourse(models.Model):
-    user = models.ForeignKey(User, models.DO_NOTHING)
-    course = models.ForeignKey("courses.Course", models.DO_NOTHING)
+    user: User = models.ForeignKey(User, models.DO_NOTHING)
+    course: courses.models.Course = models.ForeignKey(
+        "courses.Course", models.DO_NOTHING
+    )
 
     class Meta:
         managed = False
@@ -39,11 +43,11 @@ class UserCourse(models.Model):
 
 
 class VideoWatches(models.Model):
-    user = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
-    lecture = models.ForeignKey(
+    user: User = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
+    lecture: courses.models.Lecture = models.ForeignKey(
         "courses.Lecture", models.DO_NOTHING, blank=True, null=True
     )
-    isfullywatched = models.IntegerField(
+    isfullywatched: int = models.IntegerField(
         db_column="isFullyWatched", blank=True, null=True
     )  # Field name made lowercase.
 

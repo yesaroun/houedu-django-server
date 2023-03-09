@@ -1,18 +1,20 @@
-import datetime
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
-class User(models.Model):
+class User(AbstractUser):
 
     """users를 정의한 모델"""
 
+    # email: str = models.CharField(unique=True, max_length=89)
+    # password: str = models.CharField(max_length=255)
+    # created_at: datetime = models.DateTimeField(blank=True, null=True)
+    # nickname: str = models.CharField(unique=True, max_length=50, blank=True, null=True)
     email: str = models.CharField(unique=True, max_length=89)
-    password: str = models.CharField(max_length=255)
-    created_at: datetime = models.DateTimeField(blank=True, null=True)
     nickname: str = models.CharField(unique=True, max_length=50, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = "users"
 
 

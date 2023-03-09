@@ -14,7 +14,7 @@ class User(AbstractBaseUser):
     nickname: str = models.CharField(unique=True, max_length=50, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = "user"
 
 

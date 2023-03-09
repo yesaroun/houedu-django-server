@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "users.apps.UserConfig",
-    "courses.apps.CoursesConfig",
+    # "courses.apps.CoursesConfig",
     "rest_framework",
 ]
 
@@ -93,6 +93,7 @@ DATABASES = {
         "HOST": "database.csdemtmg3fgy.ap-northeast-2.rds.amazonaws.com",
         "PORT": "3306",
         # "OPTIONS": {"init_command": "SET innodb_strict_mode=1"},
+        "OPTIONS": {"init_command": "SET sql_mode='STRICT_ALL_TABLES'"},
     }
 }
 
@@ -140,3 +141,5 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 APPROVED_HOSTS = ["3.36.129.105"]
+
+AUTH_USER_MODEL = "users.User"

@@ -6,6 +6,8 @@ class User(AbstractUser):
 
     """users를 정의한 모델"""
 
+    first_name = models.CharField(max_length=150, editable=False)
+    last_name = models.CharField(max_length=150, editable=False)
     nickname: str = models.CharField(unique=True, max_length=50, blank=True, null=True)
 
     def save(self, *args, **kwargs):

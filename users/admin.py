@@ -1,15 +1,52 @@
-from .models import User, Teacher
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from .models import User, Teacher
 
 
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(UserAdmin):
 
     """User 관련 admin 패널 세팅"""
 
-    # fields = ("id", "email", "nickname", "is_staff")
+    fieldsets: tuple = (
+        (
+            "Profile",
+            {
+                "fields": (
+                    "username",
+                    "password",
+                    "email",
+                    "nickname",
+                ),
+            },
+        ),
+        (
+            "Permissions",
+            {
+                "fields": (
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "groups",
+                    "user_permissions",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
+        (
+            "Important Dates",
+            {
+                "fields": ("last_login", "date_joined"),
+                "classes": ("collapse",),
+            },
+        ),
+    )
 
-    pass
+    list_display: tuple = (
+        "username",
+        "email",
+        "nickname",
+    )
 
 
 @admin.register(Teacher)

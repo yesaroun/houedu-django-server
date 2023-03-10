@@ -1,6 +1,7 @@
 import datetime
 from users.models import Teacher, User
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class Course(models.Model):
@@ -58,8 +59,20 @@ class Review(models.Model):
 
     """Reviews를 정의한 모델"""
 
+    class StarChoices(models.IntegerChoices):
+        """별점 선택 클래스"""
+
+        ONE_STAR = 1, _("★")
+        TWO_STAR = 2, _("★★")
+        THREE_STAR = 3, _("★★★")
+        FOUR_STAR = 4, _("★★★★")
+        FIVE_STAR = 5, _("★★★★★")
+
     user: User = models.ForeignKey(
-        "users.User", models.DO_NOTHING, blank=True, null=True
+        "users.User",
+        models.DO_NOTHING,
+        blank=True,
+        null=True,
     )
     crs: Course = models.ForeignKey(
         Course,
@@ -70,6 +83,7 @@ class Review(models.Model):
     star: int = models.IntegerField(
         blank=True,
         null=True,
+        choices=StarChoices.choices,
     )
     content: str = models.TextField()
     created_at: datetime = models.DateTimeField()
@@ -79,5 +93,5 @@ class Review(models.Model):
     )
 
     class Meta:
-        managed = False
+        managed = True
         db_table = "review"

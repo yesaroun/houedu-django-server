@@ -18,3 +18,4 @@ class TeacherAdmin(admin.ModelAdmin):
     """Teacher 관련 admin 패널 세팅"""
 
     list_display = ("id", "user_id", "tcr_name")
+    list_display_links = ("user_id", "tcr_name")

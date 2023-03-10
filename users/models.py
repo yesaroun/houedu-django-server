@@ -6,22 +6,7 @@ class User(AbstractUser):
 
     """users를 정의한 모델"""
 
-    # email: str = models.CharField(unique=True, max_length=89)
-    # password: str = models.CharField(max_length=255)
-    # created_at: datetime = models.DateTimeField(blank=True, null=True)
-    # nickname: str = models.CharField(unique=True, max_length=50, blank=True, null=True)
     nickname: str = models.CharField(unique=True, max_length=50, blank=True, null=True)
-    # email: str = models.CharField(unique=True, max_length=89)
-
-    # USERNAME_FIELD = "id"
-    # objects = UserManager()
-    #
-    # def __str__(self):
-    #     return self.user_id
-    #
-    # @property
-    # def is_staff(self):
-    #     return self.is_admin
 
     def save(self, *args, **kwargs):
         self.set_password(self.password)  # 비밀번호를 해시하여 저장

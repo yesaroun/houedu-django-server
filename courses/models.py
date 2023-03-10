@@ -49,12 +49,3 @@ class Review(models.Model):
     class Meta:
         managed = False
         db_table = "review"
-
-
-from django.db import models
-
-
-class Answer(models.Model):
-    profileImg = models.URLField(blank=True)  # 이미지 링크를 첨부하기 위함
-    profileIntroduce = models.CharField(max_length=150, default="")
-    followerNum = models.PositiveIntegerField(default=0)

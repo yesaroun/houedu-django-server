@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "users.apps.UserConfig",
-    # "courses.apps.CoursesConfig",
+    "courses.apps.CoursesConfig",
     "rest_framework",
 ]
 

@@ -13,7 +13,6 @@ class Course(models.Model):
     crs_name: str = models.CharField(max_length=50)
     crs_info: str = models.TextField(blank=True, null=True)
     thumbnail: str = models.TextField(blank=True, null=True)
-    lctr = models.ForeignKey("Lecture", models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = False

@@ -8,11 +8,22 @@ class Course(models.Model):
     """Courses를 정의한 모델"""
 
     tcr: Teacher = models.ForeignKey(
-        "users.Teacher", models.DO_NOTHING, blank=True, null=True
+        "users.Teacher",
+        models.DO_NOTHING,
+        blank=True,
+        null=True,
     )
-    crs_name: str = models.CharField(max_length=50)
-    crs_info: str = models.TextField(blank=True, null=True)
-    thumbnail: str = models.TextField(blank=True, null=True)
+    crs_name: str = models.CharField(
+        max_length=50,
+    )
+    crs_info: str = models.TextField(
+        blank=True,
+        null=True,
+    )
+    thumbnail: str = models.TextField(
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         managed = False
@@ -23,10 +34,20 @@ class Lecture(models.Model):
 
     """Lectures를 정의한 모델"""
 
-    crs: Course = models.ForeignKey(Course, models.DO_NOTHING, blank=True, null=True)
-    lctr_name: str = models.CharField(max_length=50)
+    crs: Course = models.ForeignKey(
+        Course,
+        models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    lctr_name: str = models.CharField(
+        max_length=50,
+    )
     lctr_source: str = models.TextField()
-    lctr_info: str = models.TextField(blank=True, null=True)
+    lctr_info: str = models.TextField(
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         managed = False
@@ -40,11 +61,22 @@ class Review(models.Model):
     user: User = models.ForeignKey(
         "users.User", models.DO_NOTHING, blank=True, null=True
     )
-    crs: Course = models.ForeignKey(Course, models.DO_NOTHING, blank=True, null=True)
-    star: int = models.IntegerField(blank=True, null=True)
+    crs: Course = models.ForeignKey(
+        Course,
+        models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    star: int = models.IntegerField(
+        blank=True,
+        null=True,
+    )
     content: str = models.TextField()
     created_at: datetime = models.DateTimeField()
-    updated_at: datetime = models.DateTimeField(blank=True, null=True)
+    updated_at: datetime = models.DateTimeField(
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         managed = False

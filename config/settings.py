@@ -9,17 +9,18 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-import os.path
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-hvd(nwr+#vqg=avru+=!r*2n^tw^5&1dq_ori@ei(llf3j9b89"
+SECRET_KEY = "django-insecure-@rrwz_^yjthy7&hiv)887=r4w*c%qa+^)qfevj57+n#-24qs^+"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -30,6 +31,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "3.35.67.72",
 ]
+
 
 # Application definition
 
@@ -43,7 +45,7 @@ SYSTEM_APPS: list = [
 ]
 
 CUSTOM_APPS: list = [
-    "users.apps.UserConfig",
+    "users.apps.UsersConfig",
     "courses.apps.CoursesConfig",
     "rest_framework",
 ]
@@ -65,7 +67,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -80,34 +82,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
+
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-import pymysql
-
-pymysql.install_as_MySQLdb()
 
 DATABASES = {
-    # "default": {
-    #     "ENGINE": "django.db.backends.mysql",
-    #     "NAME": "houedu",
-    #     "USER": "admin",
-    #     "PASSWORD": "12345678",
-    #     "HOST": "database.csdemtmg3fgy.ap-northeast-2.rds.amazonaws.com",
-    #     "PORT": "3306",
-    #     # "OPTIONS": {"init_command": "SET innodb_strict_mode=1"},
-    #     "OPTIONS": {"init_command": "SET sql_mode='STRICT_ALL_TABLES'"},
-    # }
     "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "houedu",
-        "USER": "admin",
-        "PASSWORD": "",
-        "HOST": "#",
-        "PORT": "3306",
-        # "OPTIONS": {"init_command": "SET innodb_strict_mode=1"},
-        "OPTIONS": {"init_command": "SET sql_mode='STRICT_ALL_TABLES'"},
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -127,6 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -138,6 +124,7 @@ USE_I18N = True
 
 USE_TZ = False
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
@@ -148,6 +135,6 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-APPROVED_HOSTS = ["3.36.129.105"]
+# APPROVED_HOSTS = ["3.36.129.105"]
 
 AUTH_USER_MODEL = "users.User"

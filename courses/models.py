@@ -1,5 +1,6 @@
 import datetime
 from users.models import Teacher, User
+from common.models import CommonModel
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -55,7 +56,7 @@ class Lecture(models.Model):
         db_table = "lecture"
 
 
-class Review(models.Model):
+class Review(CommonModel):
 
     """Reviews를 정의한 모델"""
 
@@ -86,14 +87,6 @@ class Review(models.Model):
         choices=StarChoices.choices,
     )
     content: str = models.TextField()
-    created_at: datetime = models.DateTimeField(
-        auto_now_add=True,
-    )
-    updated_at: datetime = models.DateTimeField(
-        auto_now=True,
-        blank=True,
-        null=True,
-    )
 
     class Meta:
         managed = True

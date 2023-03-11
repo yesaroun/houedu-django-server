@@ -45,6 +45,7 @@ SYSTEM_APPS: list = [
 ]
 
 CUSTOM_APPS: list = [
+    "common.apps.CommonConfig",
     "users.apps.UsersConfig",
     "courses.apps.CoursesConfig",
     "rest_framework",

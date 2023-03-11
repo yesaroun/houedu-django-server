@@ -48,7 +48,7 @@ class Teacher(models.Model):
     )
 
     class Meta:
-        managed = False
+        managed = True
         db_table = "teacher"
 
 
@@ -63,7 +63,7 @@ class UserCourse(models.Model):
     )
 
     class Meta:
-        managed = False
+        managed = True
         db_table = "user_course"
 
 
@@ -87,5 +87,5 @@ class VideoWatches(models.Model):
     )  # Field name made lowercase.
 
     class Meta:
-        managed = False
+        managed = True
         db_table = "video_watches"

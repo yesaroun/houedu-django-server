@@ -87,12 +87,22 @@ import pymysql
 pymysql.install_as_MySQLdb()
 
 DATABASES = {
+    # "default": {
+    #     "ENGINE": "django.db.backends.mysql",
+    #     "NAME": "houedu",
+    #     "USER": "admin",
+    #     "PASSWORD": "12345678",
+    #     "HOST": "database.csdemtmg3fgy.ap-northeast-2.rds.amazonaws.com",
+    #     "PORT": "3306",
+    #     # "OPTIONS": {"init_command": "SET innodb_strict_mode=1"},
+    #     "OPTIONS": {"init_command": "SET sql_mode='STRICT_ALL_TABLES'"},
+    # }
     "default": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "houedu",
         "USER": "admin",
-        "PASSWORD": "12345678",
-        "HOST": "database.csdemtmg3fgy.ap-northeast-2.rds.amazonaws.com",
+        "PASSWORD": "",
+        "HOST": "#",
         "PORT": "3306",
         # "OPTIONS": {"init_command": "SET innodb_strict_mode=1"},
         "OPTIONS": {"init_command": "SET sql_mode='STRICT_ALL_TABLES'"},

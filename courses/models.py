@@ -27,7 +27,7 @@ class Course(models.Model):
     )
 
     class Meta:
-        managed = False
+        managed = True
         db_table = "course"
 
 
@@ -51,7 +51,7 @@ class Lecture(models.Model):
     )
 
     class Meta:
-        managed = False
+        managed = True
         db_table = "lecture"
 
 
@@ -86,8 +86,11 @@ class Review(models.Model):
         choices=StarChoices.choices,
     )
     content: str = models.TextField()
-    created_at: datetime = models.DateTimeField()
+    created_at: datetime = models.DateTimeField(
+        auto_now_add=True,
+    )
     updated_at: datetime = models.DateTimeField(
+        auto_now=True,
         blank=True,
         null=True,
     )

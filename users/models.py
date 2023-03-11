@@ -19,8 +19,9 @@ class User(AbstractUser):
     nickname: str = models.CharField(
         unique=True,
         max_length=50,
-        blank=True,
-        null=True,
+        # blank=True,
+        # null=True,
+        default="",
     )
 
     def save(self, *args, **kwargs):
@@ -29,6 +30,9 @@ class User(AbstractUser):
 
     class Meta:
         db_table = "user"
+
+    def __str__(self) -> str:
+        return f"{str(self.id)} {self.nickname}"
 
 
 class Teacher(models.Model):
@@ -52,6 +56,9 @@ class Teacher(models.Model):
     class Meta:
         managed = True
         db_table = "teacher"
+
+    def __str__(self) -> str:
+        return self.tcr_name
 
 
 class UserCourse(models.Model):

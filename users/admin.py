@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, Teacher
+from .models import User, Teacher, UserCourse, VideoWatches
 
 
 @admin.register(User)
@@ -56,3 +56,19 @@ class TeacherAdmin(admin.ModelAdmin):
 
     list_display: tuple = "id", "user_id", "tcr_name"
     list_display_links: tuple = "user_id", "tcr_name"
+
+
+@admin.register(UserCourse)
+class UserCourseAdmin(admin.ModelAdmin):
+
+    """유저의 수강 과목 관련 admin 패널 세팅"""
+
+    pass
+
+
+@admin.register(VideoWatches)
+class VideoWatchesAdmin(admin.ModelAdmin):
+
+    """수강 기록 관련 admin 패널 세팅"""
+
+    pass

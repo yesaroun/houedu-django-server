@@ -31,6 +31,9 @@ class Course(models.Model):
         managed = True
         db_table = "course"
 
+    def __str__(self) -> str:
+        return self.crs_name
+
 
 class Lecture(models.Model):
 
@@ -54,6 +57,9 @@ class Lecture(models.Model):
     class Meta:
         managed = True
         db_table = "lecture"
+
+    def __str__(self) -> str:
+        return self.lctr_name
 
 
 class Review(CommonModel):
@@ -91,3 +97,6 @@ class Review(CommonModel):
     class Meta:
         managed = True
         db_table = "review"
+
+    def __str__(self):
+        return f"{self.user}의 {self.crs} 리뷰"

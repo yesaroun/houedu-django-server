@@ -27,5 +27,6 @@ class AdminReview(admin.ModelAdmin):
 
     """review 관련 admin 패널 세팅"""
 
-    list_display: tuple = "id", "user_id", "crs_id", "star"
-    list_display_links: tuple = ("user_id", "crs_id")
+    list_display: tuple = "id", "__str__", "star"
+    list_display_links: tuple = "user_id", "crs_id"
+    list_filter: tuple = ("rating",)

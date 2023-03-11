@@ -27,5 +27,12 @@
         </library>
       </libraries>
     </data-source>
+    <data-source source="LOCAL" name="database-houedu" uuid="be228674-ba65-461a-b4d9-c6b5986d9d21">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://database-1.c94jrsyifbwq.ap-northeast-2.rds.amazonaws.com:3306</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

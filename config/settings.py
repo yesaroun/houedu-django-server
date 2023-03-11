@@ -87,13 +87,29 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
+import pymysql
+
+pymysql.install_as_MySQLdb()
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "houedu",
+        "USER": "admin",
+        "PASSWORD": "#",
+        "HOST": "#.c94jrsyifbwq.ap-northeast-2.rds.amazonaws.com",
+        "PORT": "3306",
+        # "OPTIONS": {"init_command": "SET innodb_strict_mode=1"},
+        "OPTIONS": {"init_command": "SET sql_mode='STRICT_ALL_TABLES'"},
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

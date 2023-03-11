@@ -19,9 +19,8 @@ class User(AbstractUser):
     nickname: str = models.CharField(
         unique=True,
         max_length=50,
-        # blank=True,
-        # null=True,
-        default="",
+        blank=True,
+        null=True,
     )
 
     def save(self, *args, **kwargs):
@@ -89,7 +88,7 @@ class VideoWatches(models.Model):
         blank=True,
         null=True,
     )
-    isfullywatched: int = models.IntegerField(
+    isfullywatched: bool = models.BooleanField(
         db_column="isFullyWatched",
         blank=True,
         null=True,

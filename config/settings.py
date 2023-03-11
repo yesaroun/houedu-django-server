@@ -11,16 +11,31 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os, json
+from django.core.exceptions import ImproperlyConfigured
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+secret_file = os.path.join(BASE_DIR, ".houeduSecrets.json")
+
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+
+
+def get_secret(setting, secrets=secrets):
+    try:
+        return secrets[setting]
+    except KeyError:
+        raise ImproperlyConfigured
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-@rrwz_^yjthy7&hiv)887=r4w*c%qa+^)qfevj57+n#-24qs^+"
+SECRET_KEY = get_secret("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -103,8 +118,8 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "houedu",
         "USER": "admin",
-        "PASSWORD": "#",
-        "HOST": "#.c94jrsyifbwq.ap-northeast-2.rds.amazonaws.com",
+        "PASSWORD": get_secret("DATABASE_PWD"),
+        "HOST": get_secret("DATABASE_HOST"),
         "PORT": "3306",
         # "OPTIONS": {"init_command": "SET innodb_strict_mode=1"},
         "OPTIONS": {"init_command": "SET sql_mode='STRICT_ALL_TABLES'"},

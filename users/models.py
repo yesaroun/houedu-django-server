@@ -97,3 +97,4 @@ class VideoWatches(models.Model):
     class Meta:
         managed = True
         db_table = "video_watches"
+        verbose_name_plural = "Video Watches"

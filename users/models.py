@@ -1,6 +1,5 @@
+from typing import Optional, Text
 from django.db import models
-
-
 from django.contrib.auth.models import AbstractUser
 
 
@@ -8,7 +7,7 @@ class User(AbstractUser):
 
     """users를 정의한 모델"""
 
-    first_name = models.CharField(
+    first_name: Text = models.CharField(
         max_length=150,
         editable=False,
     )
@@ -16,7 +15,7 @@ class User(AbstractUser):
         max_length=150,
         editable=False,
     )
-    nickname: str = models.CharField(
+    nickname: Optional[Text] = models.CharField(
         unique=True,
         max_length=50,
         blank=True,
@@ -30,7 +29,7 @@ class User(AbstractUser):
     class Meta:
         db_table = "user"
 
-    def __str__(self) -> str:
+    def __str__(self) -> Text:
         return f"{str(self.id)} {self.nickname}"
 
 
@@ -45,10 +44,10 @@ class Teacher(models.Model):
         null=True,
         related_name="teachers",
     )
-    tcr_name: str = models.CharField(
+    tcr_name: Text = models.CharField(
         max_length=50,
     )
-    tcr_info: str = models.TextField(
+    tcr_info: Optional[Text] = models.TextField(
         blank=True,
         null=True,
     )
@@ -57,7 +56,7 @@ class Teacher(models.Model):
         managed = True
         db_table = "teacher"
 
-    def __str__(self) -> str:
+    def __str__(self) -> Text:
         return self.tcr_name
 
 
@@ -79,7 +78,7 @@ class UserCourse(models.Model):
 
 
 class VideoWatches(models.Model):
-    user: User = models.ForeignKey(
+    user: Optional[User] = models.ForeignKey(
         User,
         models.DO_NOTHING,
         blank=True,
@@ -93,7 +92,7 @@ class VideoWatches(models.Model):
         null=True,
         related_name="videoWatches",
     )
-    isfullywatched: bool = models.BooleanField(
+    isfullywatched: Optional[bool] = models.BooleanField(
         db_column="isFullyWatched",
         blank=True,
         null=True,

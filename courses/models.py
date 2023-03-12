@@ -1,7 +1,8 @@
-import datetime
+from typing import Optional, Text
 from users.models import Teacher, User
 from common.models import CommonModel
 from django.db import models
+from django.db.models import QuerySet
 from django.utils.translation import gettext_lazy as _
 
 
@@ -9,21 +10,21 @@ class Course(models.Model):
 
     """Courses를 정의한 모델"""
 
-    tcr: Teacher = models.ForeignKey(
+    tcr: Optional[Teacher] = models.ForeignKey(
         "users.Teacher",
         models.DO_NOTHING,
         blank=True,
         null=True,
         related_name="courses",
     )
-    crs_name: str = models.CharField(
+    crs_name: Text = models.CharField(
         max_length=50,
     )
-    crs_info: str = models.TextField(
+    crs_info: Optional[Text] = models.TextField(
         blank=True,
         null=True,
     )
-    thumbnail: str = models.TextField(
+    thumbnail: Optional[Text] = models.TextField(
         blank=True,
         null=True,
     )
@@ -32,26 +33,38 @@ class Course(models.Model):
         managed = True
         db_table = "course"
 
-    def __str__(self) -> str:
+    def __str__(self) -> Text:
         return self.crs_name
+
+    def rating(self) -> float:
+        count: int = self.reviews.count()
+        if count == 0:
+            return 0.0
+        else:
+            total_rating: int = 0
+            for review in self.reviews.all().values(
+                "star"
+            ):  # type: QuerySet[dict[str, int]]
+                total_rating += review["star"]
+            return round(total_rating / count, 2)
 
 
 class Lecture(models.Model):
 
     """Lectures를 정의한 모델"""
 
-    crs: Course = models.ForeignKey(
+    crs: Optional[Course] = models.ForeignKey(
         Course,
         models.DO_NOTHING,
         blank=True,
         null=True,
         related_name="lectures",
     )
-    lctr_name: str = models.CharField(
+    lctr_name: Text = models.CharField(
         max_length=50,
     )
-    lctr_source: str = models.TextField()
-    lctr_info: str = models.TextField(
+    lctr_source: Text = models.TextField()
+    lctr_info: Optional[Text] = models.TextField(
         blank=True,
         null=True,
     )
@@ -60,7 +73,7 @@ class Lecture(models.Model):
         managed = True
         db_table = "lecture"
 
-    def __str__(self) -> str:
+    def __str__(self) -> Text:
         return self.lctr_name
 
 
@@ -77,30 +90,30 @@ class Review(CommonModel):
         FOUR_STAR = 4, _("★★★★")
         FIVE_STAR = 5, _("★★★★★")
 
-    user: User = models.ForeignKey(
+    user: Optional[User] = models.ForeignKey(
         "users.User",
         models.DO_NOTHING,
         blank=True,
         null=True,
         related_name="reviews",
     )
-    crs: Course = models.ForeignKey(
+    crs: Optional[Course] = models.ForeignKey(
         Course,
         models.DO_NOTHING,
         blank=True,
         null=True,
         related_name="reviews",
     )
-    star: int = models.IntegerField(
+    star: Optional[int] = models.IntegerField(
         blank=True,
         null=True,
         choices=StarChoices.choices,
     )
-    content: str = models.TextField()
+    content: Text = models.TextField()
 
     class Meta:
         managed = True
         db_table = "review"
 
-    def __str__(self):
+    def __str__(self) -> Text:
         return f"{self.user}의 {self.crs} 리뷰"

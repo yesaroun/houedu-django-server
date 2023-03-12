@@ -38,11 +38,12 @@ class Teacher(models.Model):
 
     """teachers를 정의한 모델"""
 
-    user: User = models.ForeignKey(
+    user: User = models.OneToOneField(  # 유저와 선생님 계정은 1대1
         User,
         models.DO_NOTHING,
         blank=True,
         null=True,
+        related_name="teachers",
     )
     tcr_name: str = models.CharField(
         max_length=50,
@@ -64,10 +65,12 @@ class UserCourse(models.Model):
     user: User = models.ForeignKey(
         User,
         models.DO_NOTHING,
+        related_name="userCourses",
     )
     course = models.ForeignKey(
         "courses.Course",
         models.DO_NOTHING,
+        related_name="userCourses",
     )
 
     class Meta:
@@ -81,12 +84,14 @@ class VideoWatches(models.Model):
         models.DO_NOTHING,
         blank=True,
         null=True,
+        related_name="videoWatches",
     )
     lecture = models.ForeignKey(
         "courses.Lecture",
         models.DO_NOTHING,
         blank=True,
         null=True,
+        related_name="videoWatches",
     )
     isfullywatched: bool = models.BooleanField(
         db_column="isFullyWatched",

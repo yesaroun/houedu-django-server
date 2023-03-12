@@ -14,6 +14,7 @@ class Course(models.Model):
         models.DO_NOTHING,
         blank=True,
         null=True,
+        related_name="courses",
     )
     crs_name: str = models.CharField(
         max_length=50,
@@ -44,6 +45,7 @@ class Lecture(models.Model):
         models.DO_NOTHING,
         blank=True,
         null=True,
+        related_name="lectures",
     )
     lctr_name: str = models.CharField(
         max_length=50,
@@ -80,12 +82,14 @@ class Review(CommonModel):
         models.DO_NOTHING,
         blank=True,
         null=True,
+        related_name="reviews",
     )
     crs: Course = models.ForeignKey(
         Course,
         models.DO_NOTHING,
         blank=True,
         null=True,
+        related_name="reviews",
     )
     star: int = models.IntegerField(
         blank=True,

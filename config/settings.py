@@ -63,6 +63,7 @@ CUSTOM_APPS: list = [
     "common.apps.CommonConfig",
     "users.apps.UsersConfig",
     "courses.apps.CoursesConfig",
+    "reviews.apps.ReviewsConfig",
     "rest_framework",
 ]
 
@@ -116,7 +117,7 @@ pymysql.install_as_MySQLdb()
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "houedu",
+        "NAME": "houedu_v2",
         "USER": "admin",
         "PASSWORD": get_secret("DATABASE_PWD"),
         "HOST": get_secret("DATABASE_HOST"),

@@ -22,9 +22,9 @@ class User(AbstractUser):
         null=True,
     )
 
-    def save(self, *args, **kwargs):
-        self.set_password(self.password)  # 비밀번호를 해시하여 저장
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     self.set_password(self.password)  # 비밀번호를 해시하여 저장
+    #     super().save(*args, **kwargs)
 
     class Meta:
         db_table = "user"

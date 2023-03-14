@@ -1,6 +1,6 @@
-from typing import Optional, Text
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from typing import Optional, Text
 
 
 class User(AbstractUser):
@@ -21,10 +21,6 @@ class User(AbstractUser):
         blank=True,
         null=True,
     )
-
-    # def save(self, *args, **kwargs):
-    #     self.set_password(self.password)  # 비밀번호를 해시하여 저장
-    #     super().save(*args, **kwargs)
 
     class Meta:
         db_table = "user"

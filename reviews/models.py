@@ -1,9 +1,9 @@
+from django.db import models
+from django.utils.translation import gettext_lazy as _
 from typing import Optional, Text
 from users.models import User
 from courses.models import Course
 from common.models import CommonModel
-from django.db import models
-from django.utils.translation import gettext_lazy as _
 
 
 class Review(CommonModel):

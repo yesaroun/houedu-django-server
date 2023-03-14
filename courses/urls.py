@@ -4,5 +4,5 @@ from .views import CourseList, CourseDetail
 
 urlpatterns: list = [
     path("", CourseList.as_view()),
-    path("<int:pk>", CourseDetail.as_view()),
+    path("<int:pk>/", CourseDetail.as_view()),
 ]

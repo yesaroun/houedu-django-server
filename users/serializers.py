@@ -13,6 +13,12 @@ class UserSerializer(ModelSerializer):
         )
 
 
+class UserNickNameSerializer(ModelSerializer):
+    class Meta:
+        model: User = User
+        fields: tuple = ("nickname",)
+
+
 class TeacherNameSerializer(ModelSerializer):
     class Meta:
         model: Teacher = Teacher

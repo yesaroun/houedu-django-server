@@ -1,6 +1,14 @@
 from rest_framework import serializers
 from .models import Course
 from users.serializers import TeacherNameSerializer
+
+
+class CourseNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model: Course = Course
+        fields: tuple = ("crs_name",)
+
+
 from reviews.serializers import ReviewStarSerializer
 
 

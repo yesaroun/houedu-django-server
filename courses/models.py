@@ -1,8 +1,8 @@
-from typing import Optional, Text
-from users.models import Teacher, User
-from common.models import CommonModel
 from django.db import models
 from django.db.models import QuerySet
+from users.models import Teacher, User
+from common.models import CommonModel
+from typing import Optional, Text
 
 
 class Course(models.Model):

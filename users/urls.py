@@ -1,7 +1,10 @@
 from django.urls import path
-from .views import MyInfo
+from django.urls.resolvers import URLPattern
+from .views import MyInfo, User
+from typing import List
 
 
-urlpatterns = [
+urlpatterns: List[URLPattern] = [
+    path("", User.as_view()),
     path("myinfo/", MyInfo.as_view()),
 ]

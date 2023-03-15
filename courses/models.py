@@ -27,7 +27,7 @@ class Course(models.Model):
         blank=True,
         null=True,
     )
-    prcie: int = models.PositiveIntegerField(
+    price: int = models.PositiveIntegerField(
         default=0,
     )
 

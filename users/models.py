@@ -47,6 +47,10 @@ class Teacher(models.Model):
         blank=True,
         null=True,
     )
+    tcr_img: Optional[Text] = models.TextField(
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         managed = True

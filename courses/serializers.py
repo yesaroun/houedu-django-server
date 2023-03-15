@@ -12,7 +12,7 @@ class CourseNameSerializer(serializers.ModelSerializer):
 from reviews.serializers import ReviewStarSerializer
 
 
-class CourseSerializer(serializers.ModelSerializer):
+class CourseListSerializer(serializers.ModelSerializer):
     tcr = TeacherNameSerializer(read_only=True)
     reviews = ReviewStarSerializer(read_only=True, many=True)
 
@@ -25,4 +25,11 @@ class CourseSerializer(serializers.ModelSerializer):
         #     "thumbnail",
         #     "tcr",
         # )
+        exclude = ("crs_info",)
+        # fields = "__all__"
+
+
+class CourseDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model: Course = Course
         fields = "__all__"

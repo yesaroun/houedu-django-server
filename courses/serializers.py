@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Course
-from users.serializers import TeacherNameSerializer
+from users.serializers import TeacherNameSerializer, TeacherDetailSerializer
 
 
 class CourseNameSerializer(serializers.ModelSerializer):
@@ -9,7 +9,7 @@ class CourseNameSerializer(serializers.ModelSerializer):
         fields: tuple = ("crs_name",)
 
 
-from reviews.serializers import ReviewStarSerializer
+from reviews.serializers import ReviewStarSerializer, ReviewSerializer
 
 
 class CourseListSerializer(serializers.ModelSerializer):
@@ -30,6 +30,9 @@ class CourseListSerializer(serializers.ModelSerializer):
 
 
 class CourseDetailSerializer(serializers.ModelSerializer):
+    tcr = TeacherDetailSerializer(read_only=True)
+    reviews = ReviewSerializer(many=True)
+
     class Meta:
         model: Course = Course
         fields = "__all__"

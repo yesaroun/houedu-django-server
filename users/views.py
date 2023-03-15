@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpRequest
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
@@ -21,10 +22,10 @@ class User(APIView):
         :return: HTTP 응답 객체
         :rtype: Union[django.http.JsonResponse, django.http.HttpResponse]
         """
-        password = request.data.get("password")
+        password: str = request.data.get("password")
         # 비밀번호 validation
         if not password:
-            raise ParseError
+            raise ParseError(detail="비밀번호를 입력해주세요.")
         else:
             serializer = PrivateUserSerializer(data=request.data)
         if serializer.is_valid():
@@ -77,3 +78,32 @@ class MyInfo(APIView):
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
+
+
+class ChangePwd(APIView):
+    """
+    비밀번호 변경 API
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request: HttpRequest) -> HttpResponse:
+        """
+        비밀번호 변경을 위한 PUT API
+
+        :param request: HTTP 요청 객체
+        :type request: django.http.HttpRequest
+        :return: HTTP 응답 객체
+        :rtype: Union[django.http.JsonResponse, django.http.HttpResponse]
+        """
+        user: User = request.user
+        old_pwd: str = request.data.get("old_pwd")
+        new_pwd: str = request.data.get("new_pwd")
+        if not new_pwd or not old_pwd:
+            raise ParseError
+        if user.check_password(old_pwd):  # 로그인한 유저와 old_pwd가 같다면 비밀번호 변경
+            user.set_password(new_pwd)
+            user.save()
+        else:
+            raise ParseError
+        return Response(status=status.HTTP_200_OK)

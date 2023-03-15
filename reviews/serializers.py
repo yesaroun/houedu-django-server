@@ -5,7 +5,7 @@ from courses.serializers import CourseNameSerializer
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    user = UserNickNameSerializer()
+    user = UserNickNameSerializer(read_only=True)
     crs = CourseNameSerializer()
 
     class Meta:

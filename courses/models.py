@@ -27,6 +27,9 @@ class Course(models.Model):
         blank=True,
         null=True,
     )
+    prcie = models.PositiveIntegerField(
+        default=0,
+    )
 
     class Meta:
         managed = True

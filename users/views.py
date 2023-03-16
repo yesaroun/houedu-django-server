@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpRequest
+from django.contrib.auth import authenticate, login, logout
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -10,7 +11,7 @@ from .serializers import PrivateUserSerializer
 class User(APIView):
 
     """
-    회원가입, 로그인 API
+    회원가입 API
     """
 
     def post(self, request: HttpRequest) -> HttpResponse:
@@ -80,7 +81,7 @@ class MyInfo(APIView):
             return Response(serializer.errors)
 
 
-class ChangePwd(APIView):
+class ChangePassword(APIView):
     """
     비밀번호 변경 API
     """
@@ -97,13 +98,40 @@ class ChangePwd(APIView):
         :rtype: Union[django.http.JsonResponse, django.http.HttpResponse]
         """
         user: User = request.user
-        old_pwd: str = request.data.get("old_pwd")
-        new_pwd: str = request.data.get("new_pwd")
-        if not new_pwd or not old_pwd:
+        old_password: str = request.data.get("old_password")
+        new_password: str = request.data.get("new_password")
+        if not new_password or not old_password:
             raise ParseError
-        if user.check_password(old_pwd):  # 로그인한 유저와 old_pwd가 같다면 비밀번호 변경
-            user.set_password(new_pwd)
+        if user.check_password(old_password):  # 로그인한 유저와 old_password가 같다면 비밀번호 변경
+            user.set_password(new_password)
             user.save()
         else:
             raise ParseError
         return Response(status=status.HTTP_200_OK)
+
+
+class LogIn(APIView):
+    def post(self, request):
+        username = request.data.get("username")
+        password = request.data.get("password")
+        if not username or not password:
+            raise ParseError
+        user = authenticate(
+            request,
+            username=username,
+            password=password,
+        )
+        if user:
+            login(request, user)
+            return Response({"ok": "Welcome"})
+        else:
+            return Response({"error": "wrong password"})
+
+
+class LogOut(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        logout(request)
+        return Response({"ok": "Logout"})

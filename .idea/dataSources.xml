@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="houedu" uuid="4c5c4489-ca02-4c3e-a065-1d3988f52225">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://database.csdemtmg3fgy.ap-northeast-2.rds.amazonaws.com:3306</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="newhouedu" uuid="8a180fb8-2422-4e52-a66a-f007250ddbc2">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://houedu.c94jrsyifbwq.ap-northeast-2.rds.amazonaws.com:3306</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
     <data-source source="LOCAL" name="db" uuid="40cb95b7-0b13-40c9-b07d-c07afae9b6c4">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>

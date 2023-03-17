@@ -9,7 +9,6 @@ from .serializers import PrivateUserSerializer
 
 
 class User(APIView):
-
     """
     회원가입 API
     """
@@ -111,6 +110,10 @@ class ChangePassword(APIView):
 
 
 class LogIn(APIView):
+    """
+    로그인 API
+    """
+
     def post(self, request):
         username = request.data.get("username")
         password = request.data.get("password")
@@ -129,6 +132,9 @@ class LogIn(APIView):
 
 
 class LogOut(APIView):
+    """
+    LogOut API
+    """
 
     permission_classes = [IsAuthenticated]
 

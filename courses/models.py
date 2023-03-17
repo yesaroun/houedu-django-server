@@ -6,8 +6,9 @@ from typing import Optional, Text
 
 
 class Course(models.Model):
-
-    """Courses를 정의한 모델"""
+    """
+    Model representing a Course.
+    """
 
     tcr: Optional[Teacher] = models.ForeignKey(
         "users.Teacher",
@@ -15,20 +16,24 @@ class Course(models.Model):
         blank=True,
         null=True,
         related_name="courses",
+        help_text="The teacher associated with the course, if any.",
     )
     crs_name: Text = models.CharField(
-        max_length=50,
+        max_length=50, help_text="The name of the course."
     )
     crs_info: Optional[Text] = models.TextField(
         blank=True,
         null=True,
+        help_text="Additional information about the course, if any.",
     )
     thumbnail: Optional[Text] = models.TextField(
         blank=True,
         null=True,
+        help_text="The thumbnail image URL for the course, if any.",
     )
     price: int = models.PositiveIntegerField(
         default=0,
+        help_text="The price of the course.",
     )
 
     class Meta:
@@ -36,9 +41,19 @@ class Course(models.Model):
         db_table = "course"
 
     def __str__(self) -> Text:
+        """
+        Return the name of the course.
+
+        :return: A string represeting the name of the course.
+        """
         return self.crs_name
 
     def rating(self) -> float:
+        """
+        Calculate and return the average rating for the course.
+
+        :return: A float representing the average rating for the course.
+        """
         count: int = self.reviews.count()
         if count == 0:
             return 0.0
@@ -52,8 +67,9 @@ class Course(models.Model):
 
 
 class Lecture(models.Model):
-
-    """Lectures를 정의한 모델"""
+    """
+    Model representing a Lecture.
+    """
 
     crs: Optional[Course] = models.ForeignKey(
         Course,
@@ -61,14 +77,18 @@ class Lecture(models.Model):
         blank=True,
         null=True,
         related_name="lectures",
+        help_text="The course associated with the lecture.",
     )
     lctr_name: Text = models.CharField(
-        max_length=50,
+        max_length=50, help_text="The name of the lecture."
     )
-    lctr_source: Text = models.TextField()
+    lctr_source: Text = models.TextField(
+        help_text="the source code for the lecture.",
+    )
     lctr_info: Optional[Text] = models.TextField(
         blank=True,
         null=True,
+        help_text="Additional information about the lecture, if any.",
     )
 
     class Meta:
@@ -76,4 +96,9 @@ class Lecture(models.Model):
         db_table = "lecture"
 
     def __str__(self) -> Text:
+        """
+        Return the name of the lecture.
+
+        :return: A string representing the name of the lecture.
+        """
         return self.lctr_name

@@ -6,10 +6,20 @@ from .serializers import CourseListSerializer, CourseDetailSerializer
 
 
 class CourseList(ListAPIView):
-    queryset: QuerySet = Course.objects.all()
-    serializer_class: SerializerMetaclass = CourseListSerializer
+    """
+    View to retrieve a list of courses.
+    """
+
+    queryset: QuerySet[Course] = Course.objects.all()
+    serializer_class: SerializerMetaclass[CourseListSerializer] = CourseListSerializer
 
 
 class CourseDetail(RetrieveAPIView):
-    queryset: QuerySet = Course.objects.all()
-    serializer_class: SerializerMetaclass = CourseDetailSerializer
+    """
+    View to retrieve the details of a course.
+    """
+
+    queryset: QuerySet[Course] = Course.objects.all()
+    serializer_class: SerializerMetaclass[
+        CourseDetailSerializer
+    ] = CourseDetailSerializer

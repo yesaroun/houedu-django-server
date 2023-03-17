@@ -28,7 +28,3 @@ class AdminLecture(admin.ModelAdmin):
     list_display: Tuple[str, ...] = "id", "crs_id", "lctr_name"
     search_fields: Tuple[str, ...] = ("lctr_name",)
     list_display_links: Tuple[str, ...] = ("lctr_name",)
-
-
-admin.site.register(Course, AdminCourse)
-admin.site.register(Lecture, AdminLecture)

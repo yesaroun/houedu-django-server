@@ -19,4 +19,4 @@ class CommonModel(models.Model):
     )
 
     class Meta:
-        abstract = True  # 추상화
+        abstract: bool = True  # 추상화

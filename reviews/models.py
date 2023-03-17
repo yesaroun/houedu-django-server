@@ -7,11 +7,14 @@ from common.models import CommonModel
 
 
 class Review(CommonModel):
-
-    """Reviews를 정의한 모델"""
+    """
+    Model representing a Review for a course.
+    """
 
     class StarChoices(models.IntegerChoices):
-        """별점 선택 클래스"""
+        """
+        Class to define available star choices for the review.
+        """
 
         ONE_STAR = 1, _("★")
         TWO_STAR = 2, _("★★")
@@ -41,8 +44,8 @@ class Review(CommonModel):
     content: Text = models.TextField()
 
     class Meta:
-        managed = True
-        db_table = "review"
+        managed: bool = True
+        db_table: str = "review"
 
     def __str__(self) -> Text:
         return f"{self.user}의 {self.crs} 리뷰"

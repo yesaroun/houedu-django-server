@@ -37,8 +37,8 @@ class Course(models.Model):
     )
 
     class Meta:
-        managed = True
-        db_table = "course"
+        managed: bool = True
+        db_table: str = "course"
 
     def __str__(self) -> Text:
         """
@@ -80,7 +80,8 @@ class Lecture(models.Model):
         help_text="The course associated with the lecture.",
     )
     lctr_name: Text = models.CharField(
-        max_length=50, help_text="The name of the lecture."
+        max_length=50,
+        help_text="The name of the lecture.",
     )
     lctr_source: Text = models.TextField(
         help_text="the source code for the lecture.",
@@ -92,8 +93,8 @@ class Lecture(models.Model):
     )
 
     class Meta:
-        managed = True
-        db_table = "lecture"
+        managed: bool = True
+        db_table: str = "lecture"
 
     def __str__(self) -> Text:
         """

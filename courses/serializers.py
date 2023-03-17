@@ -1,38 +1,43 @@
 from rest_framework import serializers
 from .models import Course
 from users.serializers import TeacherNameSerializer, TeacherDetailSerializer
+from typing import Tuple
 
 
 class CourseNameSerializer(serializers.ModelSerializer):
+    """
+    Serializer to retrieve the name of a course.
+    """
+
     class Meta:
         model: Course = Course
-        fields: tuple = ("crs_name",)
+        fields: Tuple[str, ...] = ("crs_name",)
 
 
 from reviews.serializers import ReviewStarSerializer, ReviewSerializer
 
 
 class CourseListSerializer(serializers.ModelSerializer):
-    tcr = TeacherNameSerializer(read_only=True)
-    reviews = ReviewStarSerializer(read_only=True, many=True)
+    """
+    Serializer to retrieve a list of courses.
+    """
+
+    tcr: TeacherNameSerializer = TeacherNameSerializer(read_only=True)
+    reviews: ReviewStarSerializer = ReviewStarSerializer(read_only=True, many=True)
 
     class Meta:
         model: Course = Course
-        # fields: tuple = (
-        #     "id",
-        #     "crs_name",
-        #     "crs_info",
-        #     "thumbnail",
-        #     "tcr",
-        # )
-        exclude = ("crs_info",)
-        # fields = "__all__"
+        exclude: Tuple[str, ...] = ("crs_info",)
 
 
 class CourseDetailSerializer(serializers.ModelSerializer):
-    tcr = TeacherDetailSerializer(read_only=True)
-    reviews = ReviewSerializer(many=True)
+    """
+    Serializer to retrieve a list of courses.
+    """
+
+    tcr: TeacherDetailSerializer = TeacherDetailSerializer(read_only=True)
+    reviews: ReviewSerializer = ReviewSerializer(many=True)
 
     class Meta:
         model: Course = Course
-        fields = "__all__"
+        fields: Tuple[str, ...] = "__all__"

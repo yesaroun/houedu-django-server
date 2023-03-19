@@ -41,10 +41,10 @@ SECRET_KEY = get_secret("SECRET_KEY")
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    # "192.168.56.101",
-    # "localhost",
-    # "127.0.0.1",
-    # "3.38.150.223",
+    "192.168.56.101",
+    "localhost",
+    "127.0.0.1",
+    "3.38.150.223",
 ]
 
 
@@ -64,11 +64,15 @@ CUSTOM_APPS: list = [
     "users.apps.UsersConfig",
     "courses.apps.CoursesConfig",
     "reviews.apps.ReviewsConfig",
+]
+
+THIRD_PARTY_APPS: list = [
     "rest_framework",
+    "rest_framework.authtoken",
     "corsheaders",
 ]
 
-INSTALLED_APPS: list = SYSTEM_APPS + CUSTOM_APPS
+INSTALLED_APPS: list = SYSTEM_APPS + CUSTOM_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -174,29 +178,13 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "users.User"
 
-CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:3000"]
-CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:3000"] 
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
 
-CORS_ORIGIN_ALLOW_ALL = True
 
-CORS_ALLOW_METHODS = [
-    'DELETE',
-    'GET',
-    'OPTIONS',
-    'PATCH',
-    'POST',
-    'PUT',
-]
-
-CORS_ALLOW_HEADERS = (
-    'accept',
-    'accept-encoding',
-    'authorization',
-    'content-type',
-    'dnt',
-    'origin',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
-)
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+        "config.authentication.JWTAuthentication",
+    ]
+}

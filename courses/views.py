@@ -11,7 +11,7 @@ class CourseList(ListAPIView):
     """
 
     queryset: QuerySet[Course] = Course.objects.all()
-    serializer_class: SerializerMetaclass[CourseListSerializer] = CourseListSerializer
+    serializer_class: SerializerMetaclass = CourseListSerializer
 
 
 class CourseDetail(RetrieveAPIView):
@@ -20,6 +20,4 @@ class CourseDetail(RetrieveAPIView):
     """
 
     queryset: QuerySet[Course] = Course.objects.all()
-    serializer_class: SerializerMetaclass[
-        CourseDetailSerializer
-    ] = CourseDetailSerializer
+    serializer_class: SerializerMetaclass = CourseDetailSerializer

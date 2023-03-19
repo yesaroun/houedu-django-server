@@ -5,7 +5,7 @@ from typing import List
 
 
 urlpatterns: List[URLPattern] = [
-    path("", User.as_view()),
+    path("signup/", User.as_view()),
     path("myinfo/", MyInfo.as_view()),
     path("password/", ChangePassword.as_view()),
     path("login/", LogIn.as_view()),

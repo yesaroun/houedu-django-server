@@ -13,6 +13,7 @@ pymysql = "^1.0.2"
 djangorestframework = "^3.14.0"
 mysqlclient = "^2.1.1"
 django-cors-headers = "^3.14.0"
+uwsgi = "^2.0.21"
 
 
 [build-system]

@@ -1,6 +1,6 @@
 from django.db.models import QuerySet
 from django.http import HttpResponse, HttpRequest
-from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import NotFound, NotAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_204_NO_CONTENT
@@ -19,12 +19,16 @@ class Reviews(APIView):
         return Response(serializer.data)
 
     def post(self, request: HttpRequest) -> HttpResponse:
-        serializer: ReviewSerializer = ReviewSerializer(data=request.data)
-        if serializer.is_valid():
-            review: Review = serializer.save()
-            return Response(ReviewSerializer(review).data)
+        if request.user.is_authenticated:
+            # 로그인 되어야만 post
+            serializer: ReviewSerializer = ReviewSerializer(data=request.data)
+            if serializer.is_valid():
+                review: Review = serializer.save(user=request.user)  # user 정보 자동으로 저장
+                return Response(ReviewSerializer(review).data)
+            else:
+                return Response(serializer.errors)
         else:
-            return Response(serializer.errors)
+            raise NotAuthenticated
 
 
 class ReviewDetail(APIView):

@@ -198,3 +198,5 @@ REST_FRAMEWORK = {
 
 
 GH_SECRET = env("GH_SECRET")
+
+# APPEND_SLASH = False

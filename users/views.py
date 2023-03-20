@@ -9,9 +9,10 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ParseError
 from .serializers import PrivateUserSerializer
+from users.models import User
 
 
-class User(APIView):
+class Users(APIView):
     """
     회원가입 API
     """
@@ -58,7 +59,7 @@ class MyInfo(APIView):
         :return: HTTP 응답 객체
         :rtype: Union[django.http.JsonResponse, django.http.HttpResponse]
         """
-        user: User = request.user
+        user = request.user
         serializer: PrivateUserSerializer = PrivateUserSerializer(user).data
         return Response(serializer)
 
@@ -71,7 +72,7 @@ class MyInfo(APIView):
         :return: HTTP 응답 객체
         :rtype: Union[django.http.JsonResponse, django.http.HttpResponse]
         """
-        user: User = request.user
+        user = request.user
         serializer: PrivateUserSerializer = PrivateUserSerializer(
             user, data=request.data, partial=True
         )
@@ -99,7 +100,7 @@ class ChangePassword(APIView):
         :return: HTTP 응답 객체
         :rtype: Union[django.http.JsonResponse, django.http.HttpResponse]
         """
-        user: User = request.user
+        user = request.user
         old_password: str = request.data.get("old_password")
         new_password: str = request.data.get("new_password")
         if not new_password or not old_password:
@@ -175,6 +176,7 @@ class JWTLogin(APIView):
 class GithubLogIn(APIView):
     def post(self, request):
         try:
+            print("hi")
             code = request.data.get("code")
             access_token = requests.post(
                 f"https://github.com/login/oauth/access_token?code={code}&client_id=b40759dbc613bb53f81d&client_secret={settings.GH_SECRET}",
@@ -198,8 +200,10 @@ class GithubLogIn(APIView):
             )
             user_emails = user_emails.json()
             try:
+                print("start try")
                 user = User.objects.get(email=user_emails[0]["email"])
                 login(request, user)
+                print("end login")
                 return Response(status=status.HTTP_200_OK)
             except User.DoesNotExist:
                 user = User.objects.create(
@@ -208,6 +212,7 @@ class GithubLogIn(APIView):
                     nickname=user_data.get("name"),
                     # img=user_data.get("avatar_url"),
                 )
+                print("make user 4")
                 user.set_unusable_password()
                 user.save()
                 login(request, user)

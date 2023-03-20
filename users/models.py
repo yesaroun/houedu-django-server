@@ -26,6 +26,10 @@ class User(AbstractUser):
         blank=False,
         unique=True,
     )
+    user_img: Optional[Text] = models.TextField(
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         db_table = "user"
@@ -53,6 +57,10 @@ class Teacher(models.Model):
         null=True,
     )
     tcr_img: Optional[Text] = models.TextField(
+        blank=True,
+        null=True,
+    )
+    ctr_career: Optional[Text] = models.TextField(
         blank=True,
         null=True,
     )

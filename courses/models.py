@@ -35,6 +35,14 @@ class Course(models.Model):
         default=0,
         help_text="The price of the course.",
     )
+    category = models.ForeignKey(
+        "categories.Category",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="courses",
+        help_text="The category of the course.",
+    )
 
     class Meta:
         managed: bool = True

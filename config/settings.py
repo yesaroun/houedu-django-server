@@ -66,6 +66,7 @@ CUSTOM_APPS: list = [
     "users.apps.UsersConfig",
     "courses.apps.CoursesConfig",
     "reviews.apps.ReviewsConfig",
+    "categories.apps.CategoriesConfig",
 ]
 
 THIRD_PARTY_APPS: list = [

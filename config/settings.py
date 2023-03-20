@@ -195,3 +195,6 @@ REST_FRAMEWORK = {
         "config.authentication.JWTAuthentication",
     ]
 }
+
+
+GH_SECRET = env("GH_SECRET")

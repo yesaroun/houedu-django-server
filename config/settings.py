@@ -11,31 +11,33 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-import os, json
+import os, json, environ
 from django.core.exceptions import ImproperlyConfigured
 
+env = environ.Env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-secret_file = os.path.join(BASE_DIR, ".houeduSecrets.json")
+# secret_file = os.path.join(BASE_DIR, ".houeduSecrets.json")
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
-with open(secret_file) as f:
-    secrets = json.loads(f.read())
+# with open(secret_file) as f:
+#     secrets = json.loads(f.read())
 
-
-def get_secret(setting, secrets=secrets):
-    try:
-        return secrets[setting]
-    except KeyError:
-        raise ImproperlyConfigured
+# def get_secret(setting, secrets=secrets):
+#     try:
+#         return secrets[setting]
+#     except KeyError:
+#         raise ImproperlyConfigured
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_secret("SECRET_KEY")
+# SECRET_KEY = get_secret("SECRET_KEY")
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -125,8 +127,10 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "houedu_v2",
         "USER": "admin",
-        "PASSWORD": get_secret("DATABASE_PWD"),
-        "HOST": get_secret("DATABASE_HOST"),
+        # "PASSWORD": get_secret("DATABASE_PWD"),
+        # "HOST": get_secret("DATABASE_HOST"),
+        "PASSWORD": env("DATABASE_PWD"),
+        "HOST": env("DATABASE_HOST"),
         "PORT": "3306",
         # "OPTIONS": {"init_command": "SET innodb_strict_mode=1"},
         "OPTIONS": {"init_command": "SET sql_mode='STRICT_ALL_TABLES'"},

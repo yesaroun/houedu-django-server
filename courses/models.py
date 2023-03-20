@@ -43,6 +43,16 @@ class Course(models.Model):
         related_name="courses",
         help_text="The category of the course.",
     )
+    crs_goal: Optional[Text] = models.TextField(
+        blank=True,
+        null=True,
+        help_text="Goal about the course, if any.",
+    )
+    crs_content: Optional[Text] = models.TextField(
+        blank=True,
+        null=True,
+        help_text="Content information about the course, if any.",
+    )
 
     class Meta:
         managed: bool = True

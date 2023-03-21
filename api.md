@@ -8,6 +8,7 @@ api/v1/courses/
 api/v1/courses/<int>
 
 - GET : 강의 디테일 
+
 - POST : (생각해보기 수강 리스트에 넣는 기능! 이건 새로운 페이지 만들까 싶음)
 
 
@@ -27,3 +28,7 @@ api/v1/myreviews/ (X)
 - PATCH : 수정 가능할 듯
 
 # Users
+
+여기에서 리뷰 작성, 삭제, 조회 만들기!
+
+

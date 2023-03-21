@@ -1,7 +1,16 @@
 from django.urls import path
 from django.urls.resolvers import URLPattern
 from rest_framework.authtoken.views import obtain_auth_token
-from .views import MyInfo, Users, ChangePassword, LogIn, LogOut, JWTLogin, GithubLogIn, KakaoLogIn
+from .views import (
+    MyInfo,
+    Users,
+    ChangePassword,
+    LogIn,
+    LogOut,
+    JWTLogin,
+    GithubLogIn,
+    KakaoLogIn,
+)
 from typing import List
 
 

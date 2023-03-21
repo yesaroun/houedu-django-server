@@ -18,6 +18,9 @@ class Reviews(APIView):
         serializer: List[ReviewSerializer] = ReviewSerializer(all_reviews, many=True)
         return Response(serializer.data)
 
+    # 수정하기
+    # 1. my info에서 post 할 수 있도록 하기
+    # 2. 현재의 ReviewSerializer로는 생성하기 어려울 듯 수정하기
     def post(self, request: HttpRequest) -> HttpResponse:
         if request.user.is_authenticated:
             # 로그인 되어야만 post
@@ -54,7 +57,12 @@ class ReviewDetail(APIView):
         else:
             return Response(serializer.errors)
 
+    # 수정하기
+    # 1. myinfo로 넘기기 또한
     def delete(self, request: HttpRequest, pk: int) -> HttpResponse:
-        review: Review = self.get_object(pk)
-        review.delete()
-        return Response(status=HTTP_204_NO_CONTENT)
+        if request.user.is_authenticated:
+            review: Review = self.get_object(pk)
+            review.delete()
+            return Response(status=HTTP_204_NO_CONTENT)
+        else:
+            raise NotAuthenticated

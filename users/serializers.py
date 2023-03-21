@@ -21,13 +21,19 @@ class PrivateUserSerializer(ModelSerializer):
 class UserNickNameSerializer(ModelSerializer):
     class Meta:
         model: User = User
-        fields: tuple = ("nickname",)
+        fields: tuple = (
+            "id",
+            "nickname",
+        )
 
 
 class TeacherNameSerializer(ModelSerializer):
     class Meta:
         model: Teacher = Teacher
-        fields: tuple = ("tcr_name",)
+        fields: tuple = (
+            "id",
+            "tcr_name",
+        )
 
 
 class TeacherDetailSerializer(ModelSerializer):

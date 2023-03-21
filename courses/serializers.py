@@ -11,7 +11,10 @@ class CourseNameSerializer(serializers.ModelSerializer):
 
     class Meta:
         model: Course = Course
-        fields: Tuple[str, ...] = ("crs_name",)
+        fields: Tuple[str, ...] = (
+            "id",
+            "crs_name",
+        )
 
 
 from reviews.serializers import ReviewStarSerializer, ReviewSerializer

@@ -25,4 +25,7 @@ class ReviewStarSerializer(serializers.ModelSerializer):
 
     class Meta:
         model: Review = Review
-        fields: Tuple[str, ...] = ("star",)
+        fields: Tuple[str, ...] = (
+            "id",
+            "star",
+        )

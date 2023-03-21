@@ -15,7 +15,11 @@ class Reviews(APIView):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         all_reviews: QuerySet[Review] = Review.objects.all()
-        serializer: List[ReviewSerializer] = ReviewSerializer(all_reviews, many=True)
+        serializer: List[ReviewSerializer] = ReviewSerializer(
+            all_reviews,
+            many=True,
+            context={"request": request},
+        )
         return Response(serializer.data)
 
     # 수정하기
@@ -24,7 +28,9 @@ class Reviews(APIView):
     def post(self, request: HttpRequest) -> HttpResponse:
         if request.user.is_authenticated:
             # 로그인 되어야만 post
-            serializer: ReviewSerializer = ReviewSerializer(data=request.data)
+            serializer: ReviewSerializer = ReviewSerializer(
+                data=request.data,
+            )
             if serializer.is_valid():
                 review: Review = serializer.save(user=request.user)  # user 정보 자동으로 저장
                 return Response(ReviewSerializer(review).data)

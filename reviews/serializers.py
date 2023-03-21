@@ -12,10 +12,15 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     user: UserNickNameSerializer = UserNickNameSerializer(read_only=True)
     crs: CourseNameSerializer = CourseNameSerializer()
+    is_owner = serializers.SerializerMethodField()
 
     class Meta:
         model: Review = Review
         fields: Tuple[str, ...] = "__all__"
+
+    def get_is_owner(self, review):
+        request = self.context["request"]
+        return review.user == request.user
 
 
 class ReviewStarSerializer(serializers.ModelSerializer):

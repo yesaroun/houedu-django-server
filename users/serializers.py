@@ -33,4 +33,4 @@ class TeacherNameSerializer(ModelSerializer):
 class TeacherDetailSerializer(ModelSerializer):
     class Meta:
         model: Teacher = Teacher
-        fields: tuple = ("tcr_name", "tcr_info", "tcr_img")
+        fields: tuple = ("tcr_name", "tcr_info", "tcr_img", "tcr_career")

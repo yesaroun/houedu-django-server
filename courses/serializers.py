@@ -23,11 +23,19 @@ class CourseListSerializer(serializers.ModelSerializer):
     """
 
     tcr: TeacherNameSerializer = TeacherNameSerializer(read_only=True)
-    reviews: ReviewStarSerializer = ReviewStarSerializer(read_only=True, many=True)
+    # reviews: ReviewStarSerializer = ReviewStarSerializer(read_only=True, many=True)
+    count_reviews = serializers.SerializerMethodField()
+    rating = serializers.SerializerMethodField()
 
     class Meta:
         model: Course = Course
         exclude: Tuple[str, ...] = ("crs_info",)
+
+    def get_count_reviews(self, course):
+        return course.count_reviews()
+
+    def get_rating(self, course):
+        return course.rating()
 
 
 class CourseDetailSerializer(serializers.ModelSerializer):
@@ -37,7 +45,15 @@ class CourseDetailSerializer(serializers.ModelSerializer):
 
     tcr: TeacherDetailSerializer = TeacherDetailSerializer(read_only=True)
     reviews: ReviewSerializer = ReviewSerializer(many=True)
+    count_reviews = serializers.SerializerMethodField()
+    rating = serializers.SerializerMethodField()
 
     class Meta:
         model: Course = Course
         fields: Tuple[str, ...] = "__all__"
+
+    def get_count_reviews(self, course):
+        return course.count_reviews()
+
+    def get_rating(self, course):
+        return course.rating()

@@ -66,13 +66,17 @@ class Course(models.Model):
         """
         return self.crs_name
 
+    def count_reviews(self) -> int:
+        count: int = self.reviews.count()
+        return count
+
     def rating(self) -> float:
         """
         Calculate and return the average rating for the course.
 
         :return: A float representing the average rating for the course.
         """
-        count: int = self.reviews.count()
+        count = self.count_reviews()
         if count == 0:
             return 0.0
         else:

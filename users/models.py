@@ -60,7 +60,7 @@ class Teacher(models.Model):
         blank=True,
         null=True,
     )
-    ctr_career: Optional[Text] = models.TextField(
+    tcr_career: Optional[Text] = models.TextField(
         blank=True,
         null=True,
     )

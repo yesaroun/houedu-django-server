@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "houedu_django_server"}]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "~3.9"
 django = "~4.0"
 pymysql = "^1.0.2"
 djangorestframework = "^3.14.0"

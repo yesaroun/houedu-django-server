@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Course
+from .models import Course, Lecture
 from users.serializers import TeacherNameSerializer, TeacherDetailSerializer
 from typing import Tuple
 
@@ -41,6 +41,16 @@ class CourseListSerializer(serializers.ModelSerializer):
         return course.rating()
 
 
+class LectureDetailSerializer(serializers.ModelSerializer):
+    """
+    Serializer to retrieve a list of lectures.
+    """
+
+    class Meta:
+        model = Lecture 
+        fields = "__all__" 
+
+
 class CourseDetailSerializer(serializers.ModelSerializer):
     """
     Serializer to retrieve a list of courses.
@@ -48,6 +58,7 @@ class CourseDetailSerializer(serializers.ModelSerializer):
 
     tcr: TeacherDetailSerializer = TeacherDetailSerializer(read_only=True)
     reviews: ReviewSerializer = ReviewSerializer(many=True)
+    lectures = LectureDetailSerializer(many=True)
     count_reviews = serializers.SerializerMethodField()
     rating = serializers.SerializerMethodField()
 
@@ -60,3 +71,5 @@ class CourseDetailSerializer(serializers.ModelSerializer):
 
     def get_rating(self, course):
         return course.rating()
+
+

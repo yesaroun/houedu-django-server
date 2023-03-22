@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["yesaroun <akor1@naver.com>"]
 readme = "README.md"
-#packages = [{include = "houedu_django_server"}]
+packages = [{include = "houedu_django_server"}]
 
 [tool.poetry.dependencies]
 python = "~3.9"

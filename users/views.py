@@ -269,9 +269,8 @@ class KakaoLogIn(APIView):
             except User.DoesNotExist:
                 user = User.objects.create(
                     email=kakao_account.get("email"),
-                    # 이상!
-                    # username=profile.get("nickname"),
-                    # name=profile.get("nickname"),
+                    username=profile.get("email"),
+                    nickname=profile.get("nickname"),
                     # avatar=profile.get("profile_image_url")
                 )
                 user.set_unusable_password()

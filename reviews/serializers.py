@@ -1,8 +1,20 @@
 from rest_framework import serializers
 from .models import Review
 from users.serializers import UserNickNameSerializer
-from courses.serializers import CourseNameSerializer
+from courses.inlineSerializers import CourseNameSerializer
 from typing import Tuple
+
+
+class UserReviewsSerializer(serializers.ModelSerializer):
+    crs = CourseNameSerializer(read_only=True)
+    """ "
+    유저가 받아오는 시리얼라이저
+    """
+
+    class Meta:
+        model = Review
+        exclude = ("user",)
+        # fields = "__all__"
 
 
 class ReviewSerializer(serializers.ModelSerializer):

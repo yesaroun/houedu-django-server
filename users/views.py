@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ParseError
-from .serializers import PrivateUserSerializer
+from .serializers import PrivateUserSerializer, MyReviewSerializer
 from users.models import User
 
 
@@ -95,6 +95,19 @@ class MyInfo(APIView):
 #         user = request.user
 #         serializer = UserCoursesSerializer(user).data
 #         return Response(serializer)
+
+
+class MyReviews(APIView):
+    """
+    내 리뷰 API
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        serializer = MyReviewSerializer(user).data
+        return Response(serializer)
 
 
 class ChangePassword(APIView):
@@ -260,7 +273,7 @@ class KakaoLogIn(APIView):
                 },
             )
             user_data = user_data.json()
-            kakao_account = (user_data.get("kakao_account"))
+            kakao_account = user_data.get("kakao_account")
             profile = kakao_account.get("profile")
             try:
                 user = User.objects.get(email=kakao_account.get("email"))

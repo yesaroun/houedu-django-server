@@ -47,8 +47,8 @@ class LectureDetailSerializer(serializers.ModelSerializer):
     """
 
     class Meta:
-        model = Lecture 
-        fields = "__all__" 
+        model = Lecture
+        fields = "__all__"
 
 
 class CourseDetailSerializer(serializers.ModelSerializer):
@@ -71,5 +71,3 @@ class CourseDetailSerializer(serializers.ModelSerializer):
 
     def get_rating(self, course):
         return course.rating()
-
-

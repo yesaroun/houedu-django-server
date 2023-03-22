@@ -17,6 +17,7 @@ uwsgi = "^2.0.21"
 pyjwt = "^2.6.0"
 requests = "^2.28.2"
 django-environ = "^0.10.0"
+whitenoise = {extras = ["brotli"], version = "^6.4.0"}
 
 
 [build-system]

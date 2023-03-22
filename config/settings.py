@@ -40,7 +40,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = "RENDER" not in os.environ
 
 ALLOWED_HOSTS = [
     "192.168.56.101",
@@ -49,6 +49,10 @@ ALLOWED_HOSTS = [
     "3.38.150.223",
 ]
 
+RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # Application definition
 
@@ -79,6 +83,7 @@ INSTALLED_APPS: list = SYSTEM_APPS + CUSTOM_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -112,13 +117,6 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
-
 import pymysql
 
 pymysql.install_as_MySQLdb()
@@ -128,12 +126,9 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "houedu_v2",
         "USER": "admin",
-        # "PASSWORD": get_secret("DATABASE_PWD"),
-        # "HOST": get_secret("DATABASE_HOST"),
         "PASSWORD": env("DATABASE_PWD"),
         "HOST": env("DATABASE_HOST"),
         "PORT": "3306",
-        # "OPTIONS": {"init_command": "SET innodb_strict_mode=1"},
         "OPTIONS": {"init_command": "SET sql_mode='STRICT_ALL_TABLES'"},
     }
 }
@@ -173,10 +168,14 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "/static/"
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ROOT_DIR = os.path.dirname(BASE_DIR)
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# ROOT_DIR = os.path.dirname(BASE_DIR)
+#
+# STATICFILES_DIRS = [os.path.join(ROOT_DIR, "client/static")]
 
-STATICFILES_DIRS = [os.path.join(ROOT_DIR, "client/static")]
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

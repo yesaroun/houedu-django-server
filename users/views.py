@@ -259,7 +259,7 @@ class KakaoLogIn(APIView):
                 headers={"Content-Type": "application/x-www-form-urlencoded"},
                 data={
                     "grant_type": "authorization_code",
-                    "client_id": "a14f6527f0fe874168759ab2ce4117d5",
+                    "client_id": "ec72411cc6b187772440b8c3801b3090",
                     "redirect_uri": "http://127.0.0.1:3000/social/kakao",
                     "code": code,
                 },
@@ -275,20 +275,29 @@ class KakaoLogIn(APIView):
             user_data = user_data.json()
             kakao_account = user_data.get("kakao_account")
             profile = kakao_account.get("profile")
+            print("user_data", user_data)
             try:
+                print("유저가 있는 경우1")
                 user = User.objects.get(email=kakao_account.get("email"))
                 login(request, user)
+                print("로그인 성공")
                 return Response(status=status.HTTP_200_OK)
+            # except Exception("땡땡"):
+            #     print("hi")
             except User.DoesNotExist:
+                print("회원가입 시작")
                 user = User.objects.create(
                     email=kakao_account.get("email"),
-                    username=profile.get("email"),
+                    username=kakao_account.get("email"),
                     nickname=profile.get("nickname"),
                     # avatar=profile.get("profile_image_url")
                 )
+                print("user", user)
                 user.set_unusable_password()
                 user.save()
+                print("로그인 직전")
                 login(request, user)
                 return Response(status=status.HTTP_200_OK)
         except Exception:
+            print("love DH")
             return Response(status=status.HTTP_400_BAD_REQUEST)

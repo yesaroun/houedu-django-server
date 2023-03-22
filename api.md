@@ -41,5 +41,4 @@ api/v1/myreviews/ (X)
 
 
 myinfo -> 닉네임 이메일, 회원 이미지 ... + 강의정보(내가 구매한 강의 - crsname)  
-# myinfo/courses -> 수강 과목, 이름
-myinfo/reviews -> 내가 작성한 리뷰 + 강의 정보(구매한 강의) (이미 작성했는지 여부는 더 고민하기)
+myinfo/reviews -> 내가 작성한 리뷰 + 강의 정보(구매한 강의) (이미 작성했는지 여부는 더 고민하기) + 수강중인 과목

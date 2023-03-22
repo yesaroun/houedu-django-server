@@ -38,12 +38,21 @@ class UserNickNameSerializer(serializers.ModelSerializer):
         )
 
 
+class UsersCoursesSerializer(serializers.ModelSerializer):
+    crs = CourseNameSerializer(read_only=True)
+
+    class Meta:
+        model = UserCourse
+        fields = "__all__"
+
+
 from reviews.serializers import UserReviewsSerializer
 
 
 class MyReviewSerializer(serializers.ModelSerializer):
     user = PrivateUserSerializer(read_only=True)
     reviews = UserReviewsSerializer(many=True)
+    userCourses = UserCourseSerializer(read_only=True, many=True)
 
     class Meta:
         model = User
@@ -75,9 +84,3 @@ class TeacherDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model: Teacher = Teacher
         fields: tuple = ("tcr_name", "tcr_info", "tcr_img", "tcr_career")
-
-
-# class UserCoursesSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ("id", "username", "nickname", "userCourses")

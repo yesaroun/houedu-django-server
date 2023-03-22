@@ -84,6 +84,19 @@ class MyInfo(APIView):
             return Response(serializer.errors)
 
 
+# class MyCourses(APIView):
+#     """
+#     내 수강 강의 API
+#     """
+#
+#     permission_classes = [IsAuthenticated]
+#
+#     def get(self, request):
+#         user = request.user
+#         serializer = UserCoursesSerializer(user).data
+#         return Response(serializer)
+
+
 class ChangePassword(APIView):
     """
     비밀번호 변경 API
@@ -256,8 +269,9 @@ class KakaoLogIn(APIView):
             except User.DoesNotExist:
                 user = User.objects.create(
                     email=kakao_account.get("email"),
-                    username=profile.get("nickname"),
-                    name=profile.get("nickname"),
+                    # 이상!
+                    # username=profile.get("nickname"),
+                    # name=profile.get("nickname"),
                     # avatar=profile.get("profile_image_url")
                 )
                 user.set_unusable_password()

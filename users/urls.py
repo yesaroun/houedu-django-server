@@ -4,6 +4,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 from .views import (
     MyInfo,
     Users,
+    # MyCourses,
     ChangePassword,
     LogIn,
     LogOut,
@@ -17,6 +18,7 @@ from typing import List
 urlpatterns: List[URLPattern] = [
     path("signup/", Users.as_view()),
     path("myinfo/", MyInfo.as_view()),
+    # path("myinfo/mycourses/", MyCourses.as_view()),
     path("password/", ChangePassword.as_view()),
     path("login/", LogIn.as_view()),
     path("token-login/", obtain_auth_token),

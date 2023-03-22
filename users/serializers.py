@@ -1,8 +1,19 @@
-from rest_framework.serializers import ModelSerializer
-from .models import User, Teacher
+from rest_framework import serializers
+from .models import User, Teacher, UserCourse
+from courses.inlineSerializers import CourseNameSerializer
 
 
-class PrivateUserSerializer(ModelSerializer):
+class UserCourseSerializer(serializers.ModelSerializer):
+    course = CourseNameSerializer(read_only=True)
+
+    class Meta:
+        model = UserCourse
+        fields = ("id", "course")
+
+
+class PrivateUserSerializer(serializers.ModelSerializer):
+    userCourses = UserCourseSerializer(read_only=True, many=True)
+
     class Meta:
         model = User
         exclude = (
@@ -18,7 +29,7 @@ class PrivateUserSerializer(ModelSerializer):
         )
 
 
-class UserNickNameSerializer(ModelSerializer):
+class UserNickNameSerializer(serializers.ModelSerializer):
     class Meta:
         model: User = User
         fields: tuple = (
@@ -27,7 +38,7 @@ class UserNickNameSerializer(ModelSerializer):
         )
 
 
-class TeacherNameSerializer(ModelSerializer):
+class TeacherNameSerializer(serializers.ModelSerializer):
     class Meta:
         model: Teacher = Teacher
         fields: tuple = (
@@ -36,7 +47,13 @@ class TeacherNameSerializer(ModelSerializer):
         )
 
 
-class TeacherDetailSerializer(ModelSerializer):
+class TeacherDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model: Teacher = Teacher
         fields: tuple = ("tcr_name", "tcr_info", "tcr_img", "tcr_career")
+
+
+# class UserCoursesSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = ("id", "username", "nickname", "userCourses")

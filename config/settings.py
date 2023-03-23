@@ -40,7 +40,10 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = "RENDER" not in os.environ
+DEBUG = True
+
+# render
+# DEBUG = "RENDER" not in os.environ
 
 ALLOWED_HOSTS = [
     "192.168.56.101",
@@ -49,10 +52,11 @@ ALLOWED_HOSTS = [
     "3.38.150.223",
 ]
 
-RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
-
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+# render
+# RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+#
+# if RENDER_EXTERNAL_HOSTNAME:
+#     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # Application definition
 
@@ -71,6 +75,7 @@ CUSTOM_APPS: list = [
     "courses.apps.CoursesConfig",
     "reviews.apps.ReviewsConfig",
     "categories.apps.CategoriesConfig",
+    # "main.apps.MainConfig",
 ]
 
 THIRD_PARTY_APPS: list = [
@@ -98,6 +103,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
+        # "DIRS": ["client"],
         "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -173,9 +179,10 @@ STATIC_URL = "/static/"
 #
 # STATICFILES_DIRS = [os.path.join(ROOT_DIR, "client/static")]
 
-if not DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# render
+# if not DEBUG:
+#     STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+#     STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -201,3 +208,10 @@ REST_FRAMEWORK = {
 }
 
 GH_SECRET = env("GH_SECRET")
+
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# ROOT_DIR = os.path.dirname(BASE_DIR)
+# STATICFILES_DIRS = [
+#     # 실제 static 파일은 모두 client 측에서 소유
+#     os.path.join(ROOT_DIR, "client/static")
+# ]

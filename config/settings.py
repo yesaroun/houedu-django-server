@@ -46,10 +46,11 @@ DEBUG = False
 # DEBUG = "RENDER" not in os.environ
 
 ALLOWED_HOSTS = [
-    "192.168.56.101",
-    "localhost",
-    "127.0.0.1",
-    "3.38.150.223",
+    # "192.168.56.101",
+    # "localhost",
+    # "127.0.0.1",
+    # "3.38.150.223",
+    "*",
 ]
 
 # render

@@ -18,6 +18,8 @@ pyjwt = "^2.6.0"
 requests = "^2.28.2"
 django-environ = "^0.10.0"
 whitenoise = {extras = ["brotli"], version = "^6.4.0"}
+drf-yasg = "^1.21.5"
+flex = "^6.14.1"
 
 
 [build-system]

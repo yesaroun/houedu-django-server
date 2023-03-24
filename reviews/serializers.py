@@ -35,6 +35,19 @@ class ReviewSerializer(serializers.ModelSerializer):
         return review.user == request.user
 
 
+class CourseDetailReviewSerializer(serializers.ModelSerializer):
+    """
+    Serializer to retrieve the review of a course.
+    """
+
+    user: UserNickNameSerializer = UserNickNameSerializer(read_only=True)
+    crs: CourseNameSerializer = CourseNameSerializer()
+
+    class Meta:
+        model: Review = Review
+        fields: Tuple[str, ...] = "__all__"
+
+
 class ReviewStarSerializer(serializers.ModelSerializer):
     """
     Serializer for retrieving only the star rating from reviews.

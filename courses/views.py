@@ -19,6 +19,32 @@ class CourseList(ListAPIView):
     serializer_class: SerializerMetaclass = CourseListSerializer
 
 
+class CourseDetailBAV(APIView):
+    """
+    Course 상세 정보 view(APIView를 상속 받아서)
+    """
+
+    def get_object(self, pk):
+        try:
+            return Course.objects.get(pk=pk)
+        except Course.DoesNotExist:
+            raise NotFound
+
+    def get(self, request, pk):
+        """
+        Course 상세 정보를 볼 수 있도록 하는 GET API
+
+        :param request:
+        :param pk:
+        :return:
+        """
+        course = self.get_object(pk)
+        serializer = CourseDetailSerializer(
+            course,
+        )
+        return Response(serializer.data)
+
+
 class CourseDetail(RetrieveAPIView):
     # class CourseDetail(APIView):
     """

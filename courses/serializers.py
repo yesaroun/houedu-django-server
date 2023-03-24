@@ -17,7 +17,11 @@ class CourseNameSerializer(serializers.ModelSerializer):
         )
 
 
-from reviews.serializers import ReviewStarSerializer, ReviewSerializer
+from reviews.serializers import (
+    ReviewStarSerializer,
+    ReviewSerializer,
+    CourseDetailReviewSerializer,
+)
 
 
 class CourseListSerializer(serializers.ModelSerializer):
@@ -57,7 +61,8 @@ class CourseDetailSerializer(serializers.ModelSerializer):
     """
 
     tcr: TeacherDetailSerializer = TeacherDetailSerializer(read_only=True)
-    reviews: ReviewSerializer = ReviewSerializer(many=True)
+    # reviews: ReviewSerializer = ReviewSerializer(many=True)
+    reviews = CourseDetailReviewSerializer(many=True)
     lectures = LectureDetailSerializer(many=True)
     count_reviews = serializers.SerializerMethodField()
     rating = serializers.SerializerMethodField()

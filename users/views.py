@@ -1,7 +1,5 @@
-import jwt
-import requests
 from django.conf import settings
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from rest_framework import status
 from rest_framework.response import Response
@@ -10,6 +8,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ParseError
 from .serializers import PrivateUserSerializer, MyReviewSerializer
 from users.models import User
+from typing import Union
+import jwt
+import requests
 
 
 class Users(APIView):
@@ -17,7 +18,7 @@ class Users(APIView):
     회원가입 API
     """
 
-    def post(self, request: HttpRequest) -> HttpResponse:
+    def post(self, request: HttpRequest) -> Union[JsonResponse, HttpResponse]:
         """
         회원가입을 위한 POST API
 
@@ -25,6 +26,7 @@ class Users(APIView):
         :type request: django.http.HttpRequest
         :return: HTTP 응답 객체
         :rtype: Union[django.http.JsonResponse, django.http.HttpResponse]
+        :raise ParseError: 비밀번호가 입력되지 않은 경우
         """
         password: str = request.data.get("password")
         # 비밀번호 validation
@@ -44,7 +46,7 @@ class Users(APIView):
 
 class MyInfo(APIView):
     """
-    사용자 정보 조회, 수정 API
+    회원 정보 조회, 수정 API
     """
 
     permission_classes = [IsAuthenticated]
@@ -52,7 +54,7 @@ class MyInfo(APIView):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         """
-        사용자가 자신의 정보를 볼 수 있도록 하는 GET API
+        회원이 자신의 정보를 볼 수 있도록 하는 GET API
 
         :param request: HTTP 요청 객체
         :type request: django.http.HttpRequest
@@ -65,7 +67,7 @@ class MyInfo(APIView):
 
     def put(self, request: HttpRequest) -> HttpResponse:
         """
-        사용자가 자신의 정보를 수정할 수 있도록 하는 PUT API
+        회원이 자신의 정보를 수정할 수 있도록 하는 PUT API
 
         :param request: HTTP 요청 객체
         :type request: django.http.HttpRequest
@@ -78,7 +80,7 @@ class MyInfo(APIView):
         )
         if serializer.is_valid():
             user = serializer.save()
-            serializer = PrivateUserSerializer(user)
+            serializer: PrivateUserSerializer = PrivateUserSerializer(user)
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
@@ -99,14 +101,22 @@ class MyInfo(APIView):
 
 class MyReviews(APIView):
     """
-    내 리뷰 API
+    회원 자신의 리뷰 API
     """
 
     permission_classes = [IsAuthenticated]
 
-    def get(self, request):
+    def get(self, request) -> HttpResponse:
+        """
+        회원의 리뷰 목록을 볼 수 있도록 하는 API
+
+        :param request: HTTP 요청 객체
+        :type request: django.http:HttpRequest
+        :return: HTTP 응답 객체
+        :rtype: Union[django.http.JsonResponse, django.http.HttpResponse]
+        """
         user = request.user
-        serializer = MyReviewSerializer(user).data
+        serializer: MyReviewSerializer = MyReviewSerializer(user).data
         return Response(serializer)
 
 
@@ -125,12 +135,13 @@ class ChangePassword(APIView):
         :type request: django.http.HttpRequest
         :return: HTTP 응답 객체
         :rtype: Union[django.http.JsonResponse, django.http.HttpResponse]
+        :raise ParseError: 비밀번호가 일치하지 않은 경우
         """
         user = request.user
         old_password: str = request.data.get("old_password")
         new_password: str = request.data.get("new_password")
         if not new_password or not old_password:
-            raise ParseError
+            raise ParseError(detail="비밀번호가 일치하지 않습니다.")
         if user.check_password(old_password):  # 로그인한 유저와 old_password가 같다면 비밀번호 변경
             user.set_password(new_password)
             user.save()
@@ -145,6 +156,12 @@ class LogIn(APIView):
     """
 
     def post(self, request):
+        """
+        사용자 로그인을 위한 POST API
+
+        :param request: HTTP 요청 객체
+        :return:
+        """
         username = request.data.get("username")
         password = request.data.get("password")
         if not username or not password:
@@ -166,7 +183,7 @@ class LogIn(APIView):
 
 class LogOut(APIView):
     """
-    LogOut API
+    로그아웃 API
     """
 
     permission_classes = [IsAuthenticated]

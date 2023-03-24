@@ -59,3 +59,13 @@ class ReviewStarSerializer(serializers.ModelSerializer):
             "id",
             "star",
         )
+
+
+class ReviewOnlySerializer(serializers.ModelSerializer):
+    """
+    Review 정보만 있는 serializer
+    """
+
+    class Meta:
+        model = Review
+        fields = "__all__"

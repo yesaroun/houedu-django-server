@@ -20,7 +20,7 @@ from typing import List
 urlpatterns: List[URLPattern] = [
     path("signup/", Users.as_view()),
     path(
-        "myinfo",
+        "myinfo/",
         include(
             [
                 path("", MyInfo.as_view()),
@@ -29,10 +29,7 @@ urlpatterns: List[URLPattern] = [
             ]
         ),
     ),
-    # path("myinfo/", MyInfo.as_view()),
     # # path("myinfo/mycourses/", MyCourses.as_view()),
-    # path("myinfo/myreviews/", MyReviews.as_view()),
-    # path("myinfo/myreviews/<int:pk>", MyReviewsDetail.as_view()),
     path("password/", ChangePassword.as_view()),
     path("login/", LogIn.as_view()),
     path("token-login/", obtain_auth_token),

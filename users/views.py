@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ParseError, NotAuthenticated, NotFound
 from .serializers import PrivateUserSerializer, MyReviewSerializer
+from reviews.serializers import ReviewOnlySerializer
 from reviews.models import Review
 from .models import User
 from typing import Union
@@ -109,7 +110,7 @@ class MyReviews(APIView):
 
     def get(self, request) -> HttpResponse:
         """
-        회원의 리뷰 목록을 볼 수 있도록 하는 API
+        회원의 리뷰 목록을 볼 수 있도록 하는 GET API
 
         :param request: HTTP 요청 객체
         :type request: django.http:HttpRequest
@@ -119,6 +120,22 @@ class MyReviews(APIView):
         user = request.user
         serializer: MyReviewSerializer = MyReviewSerializer(user).data
         return Response(serializer)
+
+    def post(self, request):
+        """
+        회원이 리뷰를 작성할 수 있도록 하는 POST API
+
+        :param request:
+        :return:
+        """
+        user = request.user
+        data = request.data.copy()
+        data["user"] = user.id
+        serializer = ReviewOnlySerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class MyReviewsDetail(APIView):

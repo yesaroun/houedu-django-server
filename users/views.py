@@ -5,9 +5,10 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.exceptions import ParseError
+from rest_framework.exceptions import ParseError, NotAuthenticated, NotFound
 from .serializers import PrivateUserSerializer, MyReviewSerializer
-from users.models import User
+from reviews.models import Review
+from .models import User
 from typing import Union
 import jwt
 import requests
@@ -118,6 +119,26 @@ class MyReviews(APIView):
         user = request.user
         serializer: MyReviewSerializer = MyReviewSerializer(user).data
         return Response(serializer)
+
+
+class MyReviewsDetail(APIView):
+    """
+    회원 자신의 리뷰 detail API
+    """
+
+    def get_object(self, pk):
+        try:
+            return Review.objects.get(pk=pk)
+        except Review.DoesNotExist:
+            raise NotFound
+
+    def delete(self, request: HttpRequest, pk: int) -> HttpResponse:
+        if request.user.is_authenticated:
+            review: Review = self.get_object(pk)
+            review.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            raise NotAuthenticated
 
 
 class ChangePassword(APIView):

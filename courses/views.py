@@ -1,5 +1,5 @@
 from django.db.models import QuerySet
-from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import NotFound, NotAuthenticated
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.serializers import SerializerMetaclass
 from rest_framework.response import Response
@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from .models import Course
 from reviews.models import Review
 from .serializers import CourseListSerializer, CourseDetailSerializer
+from users.serializers import UserCourseSerializer
 from reviews.serializers import ReviewSerializer
 
 
@@ -43,6 +44,30 @@ class CourseDetailBAV(APIView):
             course,
         )
         return Response(serializer.data)
+
+    def post(self, request, pk):
+        """
+        Course 등록을 위한 POST API
+
+        :param request:
+        :param pk:
+        :return:
+        """
+        course = self.get_object(pk)
+        if not request.user.is_authenticated:
+            raise NotAuthenticated
+        user = request.user
+        serializer = UserCourseSerializer(
+            data=request.data
+            # user,
+            # course,
+        )
+        if serializer.is_valid():
+            enroll = serializer.save(user=user, course=course)
+            serializer = UserCourseSerializer(enroll)
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
 
 
 class CourseDetail(RetrieveAPIView):

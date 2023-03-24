@@ -63,7 +63,8 @@ class UserCourseAdmin(admin.ModelAdmin):
 
     """유저의 수강 과목 관련 admin 패널 세팅"""
 
-    pass
+    list_display = "id", "user_id", "course_id"
+    list_display_links = "id", "user_id", "course_id"
 
 
 @admin.register(VideoWatches)

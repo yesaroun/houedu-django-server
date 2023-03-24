@@ -133,6 +133,13 @@ class MyReviewsDetail(APIView):
             raise NotFound
 
     def delete(self, request: HttpRequest, pk: int) -> HttpResponse:
+        """
+        회원이 자신의 리뷰를 삭제할 수 있도록 하는 DELETE API
+
+        :param request:
+        :param pk:
+        :return:
+        """
         if request.user.is_authenticated:
             review: Review = self.get_object(pk)
             review.delete()
@@ -210,6 +217,11 @@ class LogOut(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        """
+        로그아웃을 위한 POST API
+        :param request:
+        :return:
+        """
         logout(request)
         return Response({"ok": "Logout"})
 
@@ -242,6 +254,12 @@ class JWTLogin(APIView):
 
 class GithubLogIn(APIView):
     def post(self, request):
+        """
+        Github 로그인을 위한 POST API
+
+        :param request:
+        :return:
+        """
         try:
             print("hi")
             code = request.data.get("code")
@@ -290,6 +308,13 @@ class GithubLogIn(APIView):
 
 class KakaoLogIn(APIView):
     def post(self, request):
+        """
+        Kakao 로그인을 위한 POST API
+
+        :param request:
+        :return:
+        """
+
         try:
             code = request.data.get("code")
             access_token = requests.post(

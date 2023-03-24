@@ -14,6 +14,12 @@ class Reviews(APIView):
     """전체 리뷰 리스트 apiview"""
 
     def get(self, request: HttpRequest) -> HttpResponse:
+        """
+        전체 리뷰를 볼 수 있도록 하는 GET API
+
+        :param request:
+        :return:
+        """
         all_reviews: QuerySet[Review] = Review.objects.all()
         serializer: List[ReviewSerializer] = ReviewSerializer(
             all_reviews,
@@ -51,6 +57,13 @@ class ReviewDetail(APIView):
             raise NotFound
 
     def get(self, request: HttpRequest, pk: int) -> HttpResponse:
+        """
+        상세 리뷰를 볼 수 있도록 하는 GET API
+
+        :param request:
+        :param pk:
+        :return:
+        """
         review: Review = self.get_object(pk)
         serializer: ReviewSerializer = ReviewSerializer(
             review,
@@ -63,12 +76,11 @@ class ReviewDetail(APIView):
         else:
             return Response(serializer.errors)
 
-    # 수정하기
-    # 1. myinfo로 넘기기 또한
-    def delete(self, request: HttpRequest, pk: int) -> HttpResponse:
-        if request.user.is_authenticated:
-            review: Review = self.get_object(pk)
-            review.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        else:
-            raise NotAuthenticated
+    # myinfo/myreviews/<int:pk> 로 넘겼다
+    # def delete(self, request: HttpRequest, pk: int) -> HttpResponse:
+    #     if request.user.is_authenticated:
+    #         review: Review = self.get_object(pk)
+    #         review.delete()
+    #         return Response(status=status.HTTP_204_NO_CONTENT)
+    #     else:
+    #         raise NotAuthenticated

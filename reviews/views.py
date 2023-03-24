@@ -21,7 +21,7 @@ class Reviews(APIView):
         :return:
         """
         all_reviews: QuerySet[Review] = Review.objects.all()
-        serializer: List[ReviewSerializer] = ReviewSerializer(
+        serializer: ReviewSerializer = ReviewSerializer(
             all_reviews,
             many=True,
             context={"request": request},

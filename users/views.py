@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ParseError, NotAuthenticated, NotFound
 from .serializers import PrivateUserSerializer, MyReviewSerializer
-from reviews.serializers import ReviewOnlySerializer
+from reviews.serializers import ReviewOnlySerializer, ReviewSerializer
 from reviews.models import Review
 from .models import User
 from typing import Union
@@ -118,7 +118,11 @@ class MyReviews(APIView):
         :rtype: Union[django.http.JsonResponse, django.http.HttpResponse]
         """
         user = request.user
-        serializer: MyReviewSerializer = MyReviewSerializer(user).data
+        my_reviews = Review.objects.filter(user=user)
+        # serializer: MyReviewSerializer = MyReviewSerializer(user).data
+        serializer: ReviewSerializer = ReviewSerializer(
+            my_reviews, many=True, context={"request": request}
+        ).data
         return Response(serializer)
 
     def post(self, request):

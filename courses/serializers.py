@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Course, Lecture
 from users.serializers import TeacherNameSerializer, TeacherDetailSerializer
+from categories.serializers import CategorySerializer
 from typing import Tuple
 
 
@@ -17,11 +18,7 @@ class CourseNameSerializer(serializers.ModelSerializer):
         )
 
 
-from reviews.serializers import (
-    ReviewStarSerializer,
-    ReviewSerializer,
-    CourseDetailReviewSerializer,
-)
+from reviews.serializers import CourseDetailReviewSerializer
 
 
 class CourseListSerializer(serializers.ModelSerializer):
@@ -30,7 +27,7 @@ class CourseListSerializer(serializers.ModelSerializer):
     """
 
     tcr: TeacherNameSerializer = TeacherNameSerializer(read_only=True)
-    # reviews: ReviewStarSerializer = ReviewStarSerializer(read_only=True, many=True)
+    category = CategorySerializer(read_only=True)
     count_reviews = serializers.SerializerMethodField()
     rating = serializers.SerializerMethodField()
 
@@ -64,6 +61,7 @@ class CourseDetailSerializer(serializers.ModelSerializer):
     # reviews: ReviewSerializer = ReviewSerializer(many=True)
     reviews = CourseDetailReviewSerializer(many=True)
     lectures = LectureDetailSerializer(many=True)
+    category = CategorySerializer(read_only=True)
     count_reviews = serializers.SerializerMethodField()
     rating = serializers.SerializerMethodField()
 

@@ -37,7 +37,4 @@ urlpatterns: List[URLPattern] = [
             ]
         ),
     ),
-    # path("api/v1/courses/", include("courses.urls")),
-    # path("api/v1/reviews/", include("reviews.urls")),
-    # path("api/v1/users/", include("users.urls")),
 ]

@@ -1,14 +1,16 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import User, Teacher, UserCourse, VideoWatches
+from typing import Tuple
 
 
 @admin.register(User)
 class UserAdmin(UserAdmin):
+    """
+    관리자 페이지에서 User 모델을 위한 설정
+    """
 
-    """User 관련 admin 패널 세팅"""
-
-    fieldsets: tuple = (
+    fieldsets: Tuple[Tuple[str, dict]] = (
         (
             "Profile",
             {
@@ -42,7 +44,7 @@ class UserAdmin(UserAdmin):
         ),
     )
 
-    list_display: tuple = (
+    list_display: Tuple[str] = (
         "username",
         "email",
         "nickname",
@@ -51,25 +53,43 @@ class UserAdmin(UserAdmin):
 
 @admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):
+    """
+    관리자 페이지에서 Teacher 모델을 위한 설정
+    """
 
-    """Teacher 관련 admin 패널 세팅"""
-
-    list_display: tuple = "id", "user_id", "tcr_name"
-    list_display_links: tuple = "user_id", "tcr_name"
+    list_display: Tuple[str] = (
+        "id",
+        "user_id",
+        "tcr_name",
+    )
+    list_display_links: Tuple[str] = (
+        "user_id",
+        "tcr_name",
+    )
 
 
 @admin.register(UserCourse)
 class UserCourseAdmin(admin.ModelAdmin):
+    """
+    관리자 페이지에서 유저의 수강 과목(UserCourse) 모델을 위한 설정
+    """
 
-    """유저의 수강 과목 관련 admin 패널 세팅"""
-
-    list_display = "id", "user_id", "course_id"
-    list_display_links = "id", "user_id", "course_id"
+    list_display: Tuple[str] = (
+        "id",
+        "user_id",
+        "course_id",
+    )
+    list_display_links: Tuple[str] = (
+        "id",
+        "user_id",
+        "course_id",
+    )
 
 
 @admin.register(VideoWatches)
 class VideoWatchesAdmin(admin.ModelAdmin):
-
-    """수강 기록 관련 admin 패널 세팅"""
+    """
+    관리자 페이지에서 수강 기록(VideoWatches) 모델을 위한 설정
+    """
 
     pass

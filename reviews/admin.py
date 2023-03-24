@@ -5,12 +5,13 @@ from typing import Tuple
 
 @admin.register(Review)
 class AdminReview(admin.ModelAdmin):
+    """
+    관리자 페이지에서 Review 모델을 위한 설정
+    """
 
-    """review 관련 admin 패널 세팅"""
-
-    list_display: Tuple[str, ...] = (
+    list_display: Tuple[str] = (
         "id",
         "__str__",
         "star",
     )
-    list_filter: Tuple[str, ...] = ("star",)
+    list_filter: Tuple[str] = ("star",)

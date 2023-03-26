@@ -4,6 +4,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework.serializers import SerializerMetaclass
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .models import Course
 from .serializers import CourseListSerializer, CourseDetailSerializer
 from users.serializers import UserCourseSerializer
@@ -22,6 +23,8 @@ class CourseDetail(APIView):
     """
     Course 상세 정보 view(APIView를 상속 받아서)
     """
+
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_object(self, pk):
         try:
@@ -52,8 +55,6 @@ class CourseDetail(APIView):
         :return:
         """
         course = self.get_object(pk)
-        if not request.user.is_authenticated:
-            raise NotAuthenticated
         user = request.user
         serializer = UserCourseSerializer(
             data=request.data

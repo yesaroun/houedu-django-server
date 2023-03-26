@@ -147,6 +147,8 @@ class MyReviewsDetail(APIView):
     회원 자신의 리뷰 detail API
     """
 
+    permission_classes = [IsAuthenticated]
+
     def get_object(self, pk):
         try:
             return Review.objects.get(pk=pk)

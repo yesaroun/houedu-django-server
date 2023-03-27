@@ -118,7 +118,7 @@ class MyReviews(APIView):
         :rtype: Union[django.http.JsonResponse, django.http.HttpResponse]
         """
         user = request.user
-        my_reviews = Review.objects.filter(user=user)
+        my_reviews = Review.objects.filter(user=user).order_by("-created_at")
         # serializer: MyReviewSerializer = MyReviewSerializer(user).data
         serializer: ReviewSerializer = ReviewSerializer(
             my_reviews, many=True, context={"request": request}

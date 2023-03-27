@@ -20,7 +20,7 @@ class Reviews(APIView):
         :param request:
         :return:
         """
-        all_reviews: QuerySet[Review] = Review.objects.all()
+        all_reviews: QuerySet[Review] = Review.objects.all().order_by("-created_at")
         serializer: ReviewSerializer = ReviewSerializer(
             all_reviews,
             many=True,

@@ -144,6 +144,25 @@ class MyReviewsDetail(APIView):
         except Review.DoesNotExist:
             raise NotFound
 
+    # def get(self, request, pk):
+    #     """
+    #
+    #     :param request:
+    #     :param pk:
+    #     :return:
+    #     """
+    #     review: Review = self.get_object(pk)
+    #     serializer: ReviewSerializer = ReviewSerializer(
+    #         review,
+    #         data=request.data,
+    #         partial=True,
+    #     )
+    #     if serializer.is_valid():
+    #         updated_review: Review = serializer.save()
+    #         return Response(ReviewSerializer(updated_review).data)
+    #     else:
+    #         return Response(serializer.errors)
+
     def delete(self, request: HttpRequest, pk: int) -> HttpResponse:
         """
         회원이 자신의 리뷰를 삭제할 수 있도록 하는 DELETE API

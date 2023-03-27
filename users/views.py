@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ParseError, NotAuthenticated, NotFound
-from .serializers import PrivateUserSerializer
+from .serializers import PrivateUserSerializer, UserNickNameSerializer
 from reviews.serializers import ReviewOnlySerializer, ReviewSerializer
 from reviews.models import Review
 from .models import User
@@ -69,7 +69,7 @@ class MyInfo(APIView):
 
     def put(self, request: HttpRequest) -> HttpResponse:
         """
-        회원이 자신의 정보를 수정할 수 있도록 하는 PUT API
+        회원이 닉네임을 수정할 수 있도록 하는 PUT API
 
         :param request: HTTP 요청 객체
         :type request: django.http.HttpRequest
@@ -77,42 +77,17 @@ class MyInfo(APIView):
         :rtype: Union[django.http.JsonResponse, django.http.HttpResponse]
         """
         user = request.user
-        serializer: PrivateUserSerializer = PrivateUserSerializer(
-            user, data=request.data, partial=True
+        serializer = UserNickNameSerializer(
+            user,
+            data=request.data,
+            partial=True,
         )
         if serializer.is_valid():
             user = serializer.save()
-            serializer: PrivateUserSerializer = PrivateUserSerializer(user)
+            serializer = UserNickNameSerializer(user)
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
-
-
-# class MyCourses(APIView):
-#     """
-#     내 수강 강의 API
-#     """
-#
-#     permission_classes = [IsAuthenticated]
-#
-#     def get(self, request):
-#         user = request.user
-#         serializer = UserCoursesSerializer(user).data
-#         return Response(serializer)
-
-
-# class MyCourses(APIView):
-#     """
-#     회원이 등록한 코스 정보 API
-#     """
-#
-#     permission_classes = [IsAuthenticated]
-#
-#     def get_object(self, pk):
-#         try:
-#             return.objects.get(pk=pk)
-#         except Review.DoesNotExist:
-#             raise NotFound
 
 
 class MyReviews(APIView):
@@ -382,8 +357,6 @@ class KakaoLogIn(APIView):
                 login(request, user)
                 print("로그인 성공")
                 return Response(status=status.HTTP_200_OK)
-            # except Exception("땡땡"):
-            #     print("hi")
             except User.DoesNotExist:
                 print("회원가입 시작")
                 user = User.objects.create(

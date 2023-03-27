@@ -164,7 +164,7 @@ class MyReviewsDetail(APIView):
         :return:
         """
         if request.user.is_authenticated:
-            review: Review = self.get_object(pk)
+            review: Review = self.get_object(pk=pk)
             review.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:

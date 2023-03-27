@@ -7,7 +7,7 @@ from typing import Optional, Text
 
 class Course(models.Model):
     """
-    Model representing a Course.
+    Course를 나타내는 모델
     """
 
     tcr: Optional[Teacher] = models.ForeignKey(
@@ -16,24 +16,25 @@ class Course(models.Model):
         blank=True,
         null=True,
         related_name="courses",
-        help_text="The teacher associated with the course, if any.",
+        help_text="코스에 연간된 강사, 없는 경우 Null",
     )
     crs_name: Text = models.CharField(
-        max_length=50, help_text="The name of the course."
+        max_length=50,
+        help_text="코스 이름",
     )
     crs_info: Optional[Text] = models.TextField(
         blank=True,
         null=True,
-        help_text="Additional information about the course, if any.",
+        help_text="코스에 대한 설명, 없는 경우 Null",
     )
     thumbnail: Optional[Text] = models.TextField(
         blank=True,
         null=True,
-        help_text="The thumbnail image URL for the course, if any.",
+        help_text="코스의 썸네일 이미지 URL, 없는 경우 Null",
     )
     price: int = models.PositiveIntegerField(
         default=0,
-        help_text="The price of the course.",
+        help_text="코스의 가격",
     )
     category = models.ForeignKey(
         "categories.Category",
@@ -41,17 +42,17 @@ class Course(models.Model):
         blank=True,
         on_delete=models.SET_NULL,
         related_name="courses",
-        help_text="The category of the course.",
+        help_text="코스의 카테고리",
     )
     crs_goal: Optional[Text] = models.TextField(
         blank=True,
         null=True,
-        help_text="Goal about the course, if any.",
+        help_text="코스 목표, 없는 경우 Null",
     )
     crs_content: Optional[Text] = models.TextField(
         blank=True,
         null=True,
-        help_text="Content information about the course, if any.",
+        help_text="코스 콘텐츠에 대한 정보, 없는 경우 Null",
     )
 
     class Meta:
@@ -60,21 +61,26 @@ class Course(models.Model):
 
     def __str__(self) -> Text:
         """
-        Return the name of the course.
+        코스 이름 반환
 
-        :return: A string represeting the name of the course.
+        :return: 코스 이름
         """
         return self.crs_name
 
     def count_reviews(self) -> int:
+        """
+        리뷰 수 세기
+
+        :return: 리뷰 수
+        """
         count: int = self.reviews.count()
         return count
 
     def rating(self) -> float:
         """
-        Calculate and return the average rating for the course.
+        코스의 평점 평균 계산
 
-        :return: A float representing the average rating for the course.
+        :return: 코스 평균 평점
         """
         count = self.count_reviews()
         if count == 0:
@@ -90,7 +96,7 @@ class Course(models.Model):
 
 class Lecture(models.Model):
     """
-    Model representing a Lecture.
+    강의(세부 강의)를 나타내는 모델
     """
 
     crs: Optional[Course] = models.ForeignKey(
@@ -99,19 +105,19 @@ class Lecture(models.Model):
         blank=True,
         null=True,
         related_name="lectures",
-        help_text="The course associated with the lecture.",
+        help_text="세부 강의를 감싸는 Course",
     )
     lctr_name: Text = models.CharField(
         max_length=50,
-        help_text="The name of the lecture.",
+        help_text="강의 명",
     )
     lctr_source: Text = models.TextField(
-        help_text="the source code for the lecture.",
+        help_text="강의 영상 소스 코드 URL",
     )
     lctr_info: Optional[Text] = models.TextField(
         blank=True,
         null=True,
-        help_text="Additional information about the lecture, if any.",
+        help_text="강의에 대한 정보, 없는 경우 Null",
     )
 
     class Meta:
@@ -120,8 +126,8 @@ class Lecture(models.Model):
 
     def __str__(self) -> Text:
         """
-        Return the name of the lecture.
+        강의(세부 강의) 이름 반환
 
-        :return: A string representing the name of the lecture.
+        :return: 강의(세부 강의) 이름
         """
         return self.lctr_name

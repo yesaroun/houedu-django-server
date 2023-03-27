@@ -38,7 +38,7 @@ class UserNickNameSerializer(serializers.ModelSerializer):
         )
 
 
-class UsersCoursesSerializer(serializers.ModelSerializer):
+class UserCoursesSerializer(serializers.ModelSerializer):
     crs = CourseNameSerializer(read_only=True)
 
     class Meta:

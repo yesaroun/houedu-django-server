@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ParseError, NotAuthenticated, NotFound
-from .serializers import PrivateUserSerializer, MyReviewSerializer
+from .serializers import PrivateUserSerializer
 from reviews.serializers import ReviewOnlySerializer, ReviewSerializer
 from reviews.models import Review
 from .models import User
@@ -64,7 +64,7 @@ class MyInfo(APIView):
         :rtype: Union[django.http.JsonResponse, django.http.HttpResponse]
         """
         user = request.user
-        serializer: PrivateUserSerializer = PrivateUserSerializer(user).data
+        serializer: PrivateUserSerializer = PrivateUserSerializer(user=user).data
         return Response(serializer)
 
     def put(self, request: HttpRequest) -> HttpResponse:
@@ -99,6 +99,20 @@ class MyInfo(APIView):
 #         user = request.user
 #         serializer = UserCoursesSerializer(user).data
 #         return Response(serializer)
+
+
+# class MyCourses(APIView):
+#     """
+#     회원이 등록한 코스 정보 API
+#     """
+#
+#     permission_classes = [IsAuthenticated]
+#
+#     def get_object(self, pk):
+#         try:
+#             return.objects.get(pk=pk)
+#         except Review.DoesNotExist:
+#             raise NotFound
 
 
 class MyReviews(APIView):

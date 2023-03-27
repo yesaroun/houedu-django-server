@@ -24,6 +24,7 @@ urlpatterns: List[URLPattern] = [
         include(
             [
                 path("", MyInfo.as_view()),
+                # path("mycourses/", MyCourses.as_view()),
                 path("myreviews/", MyReviews.as_view()),
                 path("myrveiws/<int:pk>", MyReviewsDetail.as_view()),
             ]

@@ -226,3 +226,19 @@ GH_SECRET = env("GH_SECRET")
 #     # 실제 static 파일은 모두 client 측에서 소유
 #     os.path.join(ROOT_DIR, "client/static")
 # ]
+
+
+# S3접근
+# AWS_ACCESS_KEY_ID = ""
+# AWS_SECRET_ACCESS_KEY = ""
+# AWS_REGION = "ap-northeast-2"
+# AWS_STORAGE_BUCKET_NAME = "houedu"
+# AWS_S3_CUSTOM_DOMAIN = "%s.s3.%s.amazonaws.com" % (AWS_STORAGE_BUCKET_NAME, AWS_REGION)
+# AWS_S3_OBJECT_PARAMETERS = {
+#     "CacheControl": "max-age=86400",
+# }
+# AWS_DEFAULT_ACL = "public-read"
+# AWS_LOCATION = "images/portfolio"
+#
+# STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+# STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"

@@ -64,7 +64,7 @@ class MyInfo(APIView):
         :rtype: Union[django.http.JsonResponse, django.http.HttpResponse]
         """
         user = request.user
-        serializer: PrivateUserSerializer = PrivateUserSerializer(user=user).data
+        serializer: PrivateUserSerializer = PrivateUserSerializer(user).data
         return Response(serializer)
 
     def put(self, request: HttpRequest) -> HttpResponse:

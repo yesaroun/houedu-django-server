@@ -19,6 +19,20 @@ class CourseList(ListAPIView):
     serializer_class: SerializerMetaclass = CourseListSerializer
 
 
+class MainCourseList(APIView):
+    """
+    메인 페이지에 보내는 코스 정보 view
+    """
+
+    def get(self, request):
+        course = Course.objects.order_by("-id")[:4]
+        serializer = CourseListSerializer(
+            course,
+            many=True,
+        )
+        return Response(serializer.data)
+
+
 class CourseDetail(APIView):
     """
     Course 상세 정보 view(APIView를 상속 받아서)

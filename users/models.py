@@ -22,9 +22,15 @@ class User(AbstractUser):
         blank=True,
         null=True,
     )
-    email = models.EmailField(blank=False, unique=True, help_text="이메일 필드")
+    email = models.EmailField(
+        blank=False,
+        unique=True,
+        help_text="이메일 필드",
+    )
     user_img: Optional[Text] = models.TextField(
-        blank=True, null=True, help_text="사용자 이미지 URL 필드"
+        blank=True,
+        null=True,
+        help_text="사용자 이미지 URL 필드",
     )
 
     class Meta:

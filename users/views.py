@@ -108,7 +108,6 @@ class MyReviews(APIView):
         """
         user = request.user
         my_reviews = Review.objects.filter(user=user).order_by("-created_at")
-        # serializer: MyReviewSerializer = MyReviewSerializer(user).data
         serializer: ReviewSerializer = ReviewSerializer(
             my_reviews, many=True, context={"request": request}
         ).data
@@ -238,32 +237,6 @@ class LogOut(APIView):
         return Response({"ok": "Logout"})
 
 
-class JWTLogin(APIView):
-    """
-    use JWT Login API
-    """
-
-    def post(self, request):
-        username = request.data.get("username")
-        password = request.data.get("password")
-        if not username or not password:
-            raise ParseError
-        user = authenticate(
-            request,
-            username=username,
-            password=password,
-        )
-        if user:
-            token = jwt.encode(
-                {"pk": user.pk},
-                settings.SECRET_KEY,
-                algorithm="HS256",
-            )
-            return Response({"token": token})
-        else:
-            return Response({"error": "wrong password"})
-
-
 class GithubLogIn(APIView):
     def post(self, request):
         """
@@ -334,7 +307,8 @@ class KakaoLogIn(APIView):
                 data={
                     "grant_type": "authorization_code",
                     "client_id": "ec72411cc6b187772440b8c3801b3090",
-                    "redirect_uri": "https://houedu.duckdns.org/social/kakao",
+                    # "redirect_uri": "https://houedu.duckdns.org/social/kakao",
+                    "redirect_uri": "https://127.0.0.1:3000/social/kakao",
                     "code": code,
                 },
             )

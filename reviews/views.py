@@ -28,23 +28,6 @@ class Reviews(APIView):
         )
         return Response(serializer.data)
 
-    # 수정하기
-    # 1. my info에서 post 할 수 있도록 하기
-    # 2. 현재의 ReviewSerializer로는 생성하기 어려울 듯 수정하기
-    def post(self, request: HttpRequest) -> HttpResponse:
-        if request.user.is_authenticated:
-            # 로그인 되어야만 post
-            serializer: ReviewSerializer = ReviewSerializer(
-                data=request.data,
-            )
-            if serializer.is_valid():
-                review: Review = serializer.save(user=request.user)  # user 정보 자동으로 저장
-                return Response(ReviewSerializer(review).data)
-            else:
-                return Response(serializer.errors)
-        else:
-            raise NotAuthenticated
-
 
 class ReviewDetail(APIView):
 
@@ -75,12 +58,3 @@ class ReviewDetail(APIView):
             return Response(ReviewSerializer(updated_review).data)
         else:
             return Response(serializer.errors)
-
-    # myinfo/myreviews/<int:pk> 로 넘겼다
-    # def delete(self, request: HttpRequest, pk: int) -> HttpResponse:
-    #     if request.user.is_authenticated:
-    #         review: Review = self.get_object(pk)
-    #         review.delete()
-    #         return Response(status=status.HTTP_204_NO_CONTENT)
-    #     else:
-    #         raise NotAuthenticated

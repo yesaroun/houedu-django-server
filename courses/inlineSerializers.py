@@ -5,7 +5,7 @@ from typing import Tuple
 
 class CourseNameSerializer(serializers.ModelSerializer):
     """
-    Serializer to retrieve the name of a course.
+    코스 이름을 위한 serializer
     """
 
     class Meta:

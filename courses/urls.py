@@ -5,7 +5,6 @@ from .views import CourseList, CourseDetail, MainCourseList
 
 urlpatterns: list[URLPattern] = [
     path("", CourseList.as_view()),
-    # path("<int:pk>/", CourseDetail.as_view()),
     path("mainlist/", MainCourseList.as_view()),
     path("<int:pk>/", CourseDetail.as_view()),
 ]

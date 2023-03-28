@@ -4,13 +4,11 @@ from rest_framework.authtoken.views import obtain_auth_token
 from .views import (
     MyInfo,
     Users,
-    # MyCourses,
     MyReviews,
     MyReviewsDetail,
     ChangePassword,
     LogIn,
     LogOut,
-    JWTLogin,
     GithubLogIn,
     KakaoLogIn,
 )
@@ -24,17 +22,13 @@ urlpatterns: List[URLPattern] = [
         include(
             [
                 path("", MyInfo.as_view()),
-                # path("mycourses/", MyCourses.as_view()),
                 path("myreviews/", MyReviews.as_view()),
                 path("myreviews/<int:pk>/", MyReviewsDetail.as_view()),
             ]
         ),
     ),
-    # # path("myinfo/mycourses/", MyCourses.as_view()),
     path("password/", ChangePassword.as_view()),
     path("login/", LogIn.as_view()),
-    path("token-login/", obtain_auth_token),
-    path("jwt-login/", JWTLogin.as_view()),
     path("logout/", LogOut.as_view()),
     path("github/", GithubLogIn.as_view()),
     path("kakao/", KakaoLogIn.as_view()),

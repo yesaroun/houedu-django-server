@@ -273,7 +273,6 @@ class GithubLogIn(APIView):
         :return:
         """
         try:
-            print("hi")
             code = request.data.get("code")
             access_token = requests.post(
                 f"https://github.com/login/oauth/access_token?code={code}&client_id=b40759dbc613bb53f81d&client_secret={settings.GH_SECRET}",
@@ -335,7 +334,7 @@ class KakaoLogIn(APIView):
                 data={
                     "grant_type": "authorization_code",
                     "client_id": "ec72411cc6b187772440b8c3801b3090",
-                    "redirect_uri": "http://127.0.0.1:3000/social/kakao",
+                    "redirect_uri": "https://houedu.duckdns.org/social/kakao",
                     "code": code,
                 },
             )

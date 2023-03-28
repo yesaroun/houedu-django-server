@@ -1,22 +1,34 @@
 from rest_framework import serializers
 from .models import User, Teacher, UserCourse
 from courses.inlineSerializers import CourseNameSerializer
+from typing import Tuple
 
 
 class UserCourseSerializer(serializers.ModelSerializer):
+    """
+    사용자가 등록한 코스 serializer
+    """
+
     course = CourseNameSerializer(read_only=True)
 
     class Meta:
         model = UserCourse
-        fields = ("id", "course")
+        fields: Tuple[str] = (
+            "id",
+            "course",
+        )
 
 
 class PrivateUserSerializer(serializers.ModelSerializer):
+    """
+    사용자 정보 serializer
+    """
+
     userCourses = UserCourseSerializer(read_only=True, many=True)
 
     class Meta:
         model = User
-        exclude = (
+        exclude: Tuple[str] = (
             "password",
             "is_superuser",
             "id",
@@ -30,15 +42,23 @@ class PrivateUserSerializer(serializers.ModelSerializer):
 
 
 class UserNickNameSerializer(serializers.ModelSerializer):
+    """
+    사용자의 nickname serializer
+    """
+
     class Meta:
         model: User = User
-        fields: tuple = (
+        fields: Tuple[str] = (
             "id",
             "nickname",
         )
 
 
 class UserCoursesSerializer(serializers.ModelSerializer):
+    """
+    사용자가 등록한 코스들 serializer
+    """
+
     crs = CourseNameSerializer(read_only=True)
 
     class Meta:

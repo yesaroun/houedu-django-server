@@ -7,12 +7,12 @@ from typing import Tuple
 
 class CourseNameSerializer(serializers.ModelSerializer):
     """
-    Serializer to retrieve the name of a course.
+    코스 이름을 검색하는 Serializer
     """
 
     class Meta:
         model: Course = Course
-        fields: Tuple[str, ...] = (
+        fields: Tuple[str] = (
             "id",
             "crs_name",
         )
@@ -23,7 +23,7 @@ from reviews.serializers import CourseDetailReviewSerializer
 
 class CourseListSerializer(serializers.ModelSerializer):
     """
-    Serializer to retrieve a list of courses.
+    코스 리스트를 조회하는 Serializer
     """
 
     tcr: TeacherNameSerializer = TeacherNameSerializer(read_only=True)
@@ -33,7 +33,7 @@ class CourseListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model: Course = Course
-        exclude: Tuple[str, ...] = ("crs_info",)
+        exclude: Tuple[str] = ("crs_info",)
 
     def get_count_reviews(self, course):
         return course.count_reviews()
@@ -44,7 +44,7 @@ class CourseListSerializer(serializers.ModelSerializer):
 
 class LectureDetailSerializer(serializers.ModelSerializer):
     """
-    Serializer to retrieve a list of lectures.
+    강의 리스트를 조회하는 Serializer
     """
 
     class Meta:
@@ -54,11 +54,10 @@ class LectureDetailSerializer(serializers.ModelSerializer):
 
 class CourseDetailSerializer(serializers.ModelSerializer):
     """
-    Serializer to retrieve a list of courses.
+    코스 세부 정보를 조회하는 Serializer
     """
 
-    tcr: TeacherDetailSerializer = TeacherDetailSerializer(read_only=True)
-    # reviews: ReviewSerializer = ReviewSerializer(many=True)
+    tcr = TeacherDetailSerializer(read_only=True)
     reviews = CourseDetailReviewSerializer(many=True)
     lectures = LectureDetailSerializer(many=True)
     category = CategorySerializer(read_only=True)
@@ -67,7 +66,7 @@ class CourseDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model: Course = Course
-        fields: Tuple[str, ...] = "__all__"
+        fields: Tuple[str] = "__all__"
 
     def get_count_reviews(self, course):
         return course.count_reviews()

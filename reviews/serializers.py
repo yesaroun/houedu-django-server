@@ -6,20 +6,20 @@ from typing import Tuple
 
 
 class UserReviewsSerializer(serializers.ModelSerializer):
-    crs = CourseNameSerializer(read_only=True)
-    """ "
-    유저가 받아오는 시리얼라이저
     """
+    사용자의 리뷰를 조회하는 serializer
+    """
+
+    crs = CourseNameSerializer(read_only=True)
 
     class Meta:
         model = Review
-        exclude = ("user",)
-        # fields = "__all__"
+        exclude: Tuple[str] = ("user",)
 
 
 class ReviewSerializer(serializers.ModelSerializer):
     """
-    Serializer to retrieve the review of a course.
+    모든 리뷰를 조회하는 serializer
     """
 
     user: UserNickNameSerializer = UserNickNameSerializer(read_only=True)
@@ -28,7 +28,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model: Review = Review
-        fields: Tuple[str, ...] = "__all__"
+        fields: Tuple[str] = "__all__"
 
     def get_is_owner(self, review):
         request = self.context["request"]
@@ -37,7 +37,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class CourseDetailReviewSerializer(serializers.ModelSerializer):
     """
-    Serializer to retrieve the review of a course.
+    코스 디테일페이지에 해당 코스의 리뷰를 조회하는 serializer
     """
 
     user: UserNickNameSerializer = UserNickNameSerializer(read_only=True)
@@ -45,12 +45,12 @@ class CourseDetailReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model: Review = Review
-        fields: Tuple[str, ...] = "__all__"
+        fields: Tuple[str] = "__all__"
 
 
 class ReviewStarSerializer(serializers.ModelSerializer):
     """
-    Serializer for retrieving only the star rating from reviews.
+    리뷰의 별점을 조회하는 serializer
     """
 
     class Meta:

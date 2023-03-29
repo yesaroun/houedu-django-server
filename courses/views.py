@@ -12,7 +12,7 @@ from users.serializers import UserCourseSerializer
 
 class CourseList(ListAPIView):
     """
-    View to retrieve a list of courses.
+    코스 리스트를 보내는 ListAPIView
     """
 
     queryset: QuerySet[Course] = Course.objects.all()
@@ -25,6 +25,11 @@ class MainCourseList(APIView):
     """
 
     def get(self, request):
+        """
+        메인 페이지에 최신 코스 정보 4개를 보내는 GET API
+        :param request:
+        :return:
+        """
         course = Course.objects.order_by("-id")[:4]
         serializer = CourseListSerializer(
             course,
@@ -70,11 +75,7 @@ class CourseDetail(APIView):
         """
         course = self.get_object(pk)
         user = request.user
-        serializer = UserCourseSerializer(
-            data=request.data
-            # user,
-            # course,
-        )
+        serializer = UserCourseSerializer(data=request.data)
         if serializer.is_valid():
             enroll = serializer.save(user=user, course=course)
             serializer = UserCourseSerializer(enroll)

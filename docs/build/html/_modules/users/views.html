@@ -1,18 +1,19 @@
 
 <!DOCTYPE html>
 
-<html lang="kor">
+<html lang="ko">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>users.views &#8212; houedu 1.0.0 documentation</title>
+    <title>users.views &#8212; houedu  문서</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/sphinx_highlight.js"></script>
-    <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="색인" href="../../genindex.html" />
+    <link rel="search" title="검색" href="../../search.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -29,7 +30,7 @@
 
           <div class="body" role="main">
             
-  <h1>Source code for users.views</h1><div class="highlight"><pre>
+  <h1>users.views의 소스 코드</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
 <span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span><span class="p">,</span> <span class="n">HttpRequest</span><span class="p">,</span> <span class="n">JsonResponse</span>
 <span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">authenticate</span><span class="p">,</span> <span class="n">login</span><span class="p">,</span> <span class="n">logout</span>
@@ -38,8 +39,8 @@
 <span class="kn">from</span> <span class="nn">rest_framework.views</span> <span class="kn">import</span> <span class="n">APIView</span>
 <span class="kn">from</span> <span class="nn">rest_framework.permissions</span> <span class="kn">import</span> <span class="n">IsAuthenticated</span>
 <span class="kn">from</span> <span class="nn">rest_framework.exceptions</span> <span class="kn">import</span> <span class="n">ParseError</span><span class="p">,</span> <span class="n">NotAuthenticated</span><span class="p">,</span> <span class="n">NotFound</span>
-<span class="kn">from</span> <span class="nn">.serializers</span> <span class="kn">import</span> <span class="n">PrivateUserSerializer</span><span class="p">,</span> <span class="n">MyReviewSerializer</span>
-<span class="kn">from</span> <span class="nn">reviews.serializers</span> <span class="kn">import</span> <span class="n">ReviewOnlySerializer</span>
+<span class="kn">from</span> <span class="nn">.serializers</span> <span class="kn">import</span> <span class="n">PrivateUserSerializer</span><span class="p">,</span> <span class="n">UserNickNameSerializer</span>
+<span class="kn">from</span> <span class="nn">reviews.serializers</span> <span class="kn">import</span> <span class="n">ReviewOnlySerializer</span><span class="p">,</span> <span class="n">ReviewSerializer</span>
 <span class="kn">from</span> <span class="nn">reviews.models</span> <span class="kn">import</span> <span class="n">Review</span>
 <span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">User</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
@@ -47,12 +48,12 @@
 <span class="kn">import</span> <span class="nn">requests</span>
 
 
-<div class="viewcode-block" id="Users"><a class="viewcode-back" href="../../users.html#users.views.Users">[docs]</a><span class="k">class</span> <span class="nc">Users</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+<div class="viewcode-block" id="Users"><a class="viewcode-back" href="../../users.html#users.views.Users">[문서]</a><span class="k">class</span> <span class="nc">Users</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    회원가입 API</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Users.post"><a class="viewcode-back" href="../../users.html#users.views.Users.post">[docs]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">JsonResponse</span><span class="p">,</span> <span class="n">HttpResponse</span><span class="p">]:</span>
+<div class="viewcode-block" id="Users.post"><a class="viewcode-back" href="../../users.html#users.views.Users.post">[문서]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">JsonResponse</span><span class="p">,</span> <span class="n">HttpResponse</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        회원가입을 위한 POST API</span>
 
@@ -78,15 +79,14 @@
             <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">errors</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="MyInfo"><a class="viewcode-back" href="../../users.html#users.views.MyInfo">[docs]</a><span class="k">class</span> <span class="nc">MyInfo</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+<div class="viewcode-block" id="MyInfo"><a class="viewcode-back" href="../../users.html#users.views.MyInfo">[문서]</a><span class="k">class</span> <span class="nc">MyInfo</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    회원 정보 조회, 수정 API</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">permission_classes</span> <span class="o">=</span> <span class="p">[</span><span class="n">IsAuthenticated</span><span class="p">]</span>
-    <span class="c1"># 로그인 여부 확인</span>
 
-<div class="viewcode-block" id="MyInfo.get"><a class="viewcode-back" href="../../users.html#users.views.MyInfo.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
+<div class="viewcode-block" id="MyInfo.get"><a class="viewcode-back" href="../../users.html#users.views.MyInfo.get">[문서]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        회원이 자신의 정보를 볼 수 있도록 하는 GET API</span>
 
@@ -99,9 +99,9 @@
         <span class="n">serializer</span><span class="p">:</span> <span class="n">PrivateUserSerializer</span> <span class="o">=</span> <span class="n">PrivateUserSerializer</span><span class="p">(</span><span class="n">user</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
         <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MyInfo.put"><a class="viewcode-back" href="../../users.html#users.views.MyInfo.put">[docs]</a>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
+<div class="viewcode-block" id="MyInfo.put"><a class="viewcode-back" href="../../users.html#users.views.MyInfo.put">[문서]</a>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        회원이 자신의 정보를 수정할 수 있도록 하는 PUT API</span>
+<span class="sd">        회원이 닉네임을 수정할 수 있도록 하는 PUT API</span>
 
 <span class="sd">        :param request: HTTP 요청 객체</span>
 <span class="sd">        :type request: django.http.HttpRequest</span>
@@ -109,38 +109,27 @@
 <span class="sd">        :rtype: Union[django.http.JsonResponse, django.http.HttpResponse]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">user</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span>
-        <span class="n">serializer</span><span class="p">:</span> <span class="n">PrivateUserSerializer</span> <span class="o">=</span> <span class="n">PrivateUserSerializer</span><span class="p">(</span>
-            <span class="n">user</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">partial</span><span class="o">=</span><span class="kc">True</span>
+        <span class="n">serializer</span> <span class="o">=</span> <span class="n">UserNickNameSerializer</span><span class="p">(</span>
+            <span class="n">user</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+            <span class="n">partial</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">serializer</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
             <span class="n">user</span> <span class="o">=</span> <span class="n">serializer</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-            <span class="n">serializer</span><span class="p">:</span> <span class="n">PrivateUserSerializer</span> <span class="o">=</span> <span class="n">PrivateUserSerializer</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+            <span class="n">serializer</span> <span class="o">=</span> <span class="n">UserNickNameSerializer</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">errors</span><span class="p">)</span></div></div>
 
 
-<span class="c1"># class MyCourses(APIView):</span>
-<span class="c1">#     &quot;&quot;&quot;</span>
-<span class="c1">#     내 수강 강의 API</span>
-<span class="c1">#     &quot;&quot;&quot;</span>
-<span class="c1">#</span>
-<span class="c1">#     permission_classes = [IsAuthenticated]</span>
-<span class="c1">#</span>
-<span class="c1">#     def get(self, request):</span>
-<span class="c1">#         user = request.user</span>
-<span class="c1">#         serializer = UserCoursesSerializer(user).data</span>
-<span class="c1">#         return Response(serializer)</span>
-
-
-<div class="viewcode-block" id="MyReviews"><a class="viewcode-back" href="../../users.html#users.views.MyReviews">[docs]</a><span class="k">class</span> <span class="nc">MyReviews</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+<div class="viewcode-block" id="MyReviews"><a class="viewcode-back" href="../../users.html#users.views.MyReviews">[문서]</a><span class="k">class</span> <span class="nc">MyReviews</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    회원 자신의 리뷰 API</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">permission_classes</span> <span class="o">=</span> <span class="p">[</span><span class="n">IsAuthenticated</span><span class="p">]</span>
 
-<div class="viewcode-block" id="MyReviews.get"><a class="viewcode-back" href="../../users.html#users.views.MyReviews.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
+<div class="viewcode-block" id="MyReviews.get"><a class="viewcode-back" href="../../users.html#users.views.MyReviews.get">[문서]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        회원의 리뷰 목록을 볼 수 있도록 하는 GET API</span>
 
@@ -150,10 +139,13 @@
 <span class="sd">        :rtype: Union[django.http.JsonResponse, django.http.HttpResponse]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">user</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span>
-        <span class="n">serializer</span><span class="p">:</span> <span class="n">MyReviewSerializer</span> <span class="o">=</span> <span class="n">MyReviewSerializer</span><span class="p">(</span><span class="n">user</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">my_reviews</span> <span class="o">=</span> <span class="n">Review</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;-created_at&quot;</span><span class="p">)</span>
+        <span class="n">serializer</span><span class="p">:</span> <span class="n">ReviewSerializer</span> <span class="o">=</span> <span class="n">ReviewSerializer</span><span class="p">(</span>
+            <span class="n">my_reviews</span><span class="p">,</span> <span class="n">many</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;request&quot;</span><span class="p">:</span> <span class="n">request</span><span class="p">}</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">data</span>
         <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MyReviews.post"><a class="viewcode-back" href="../../users.html#users.views.MyReviews.post">[docs]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<div class="viewcode-block" id="MyReviews.post"><a class="viewcode-back" href="../../users.html#users.views.MyReviews.post">[문서]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        회원이 리뷰를 작성할 수 있도록 하는 POST API</span>
 
@@ -170,18 +162,20 @@
         <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">errors</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_400_BAD_REQUEST</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="MyReviewsDetail"><a class="viewcode-back" href="../../users.html#users.views.MyReviewsDetail">[docs]</a><span class="k">class</span> <span class="nc">MyReviewsDetail</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+<div class="viewcode-block" id="MyReviewsDetail"><a class="viewcode-back" href="../../users.html#users.views.MyReviewsDetail">[문서]</a><span class="k">class</span> <span class="nc">MyReviewsDetail</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    회원 자신의 리뷰 detail API</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MyReviewsDetail.get_object"><a class="viewcode-back" href="../../users.html#users.views.MyReviewsDetail.get_object">[docs]</a>    <span class="k">def</span> <span class="nf">get_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pk</span><span class="p">):</span>
+    <span class="n">permission_classes</span> <span class="o">=</span> <span class="p">[</span><span class="n">IsAuthenticated</span><span class="p">]</span>
+
+<div class="viewcode-block" id="MyReviewsDetail.get_object"><a class="viewcode-back" href="../../users.html#users.views.MyReviewsDetail.get_object">[문서]</a>    <span class="k">def</span> <span class="nf">get_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pk</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Review</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">Review</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">NotFound</span></div>
 
-<div class="viewcode-block" id="MyReviewsDetail.delete"><a class="viewcode-back" href="../../users.html#users.views.MyReviewsDetail.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span><span class="p">,</span> <span class="n">pk</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
+<div class="viewcode-block" id="MyReviewsDetail.delete"><a class="viewcode-back" href="../../users.html#users.views.MyReviewsDetail.delete">[문서]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span><span class="p">,</span> <span class="n">pk</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        회원이 자신의 리뷰를 삭제할 수 있도록 하는 DELETE API</span>
 
@@ -190,21 +184,21 @@
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">:</span>
-            <span class="n">review</span><span class="p">:</span> <span class="n">Review</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">pk</span><span class="p">)</span>
+            <span class="n">review</span><span class="p">:</span> <span class="n">Review</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
             <span class="n">review</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
             <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_204_NO_CONTENT</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">NotAuthenticated</span></div></div>
 
 
-<div class="viewcode-block" id="ChangePassword"><a class="viewcode-back" href="../../users.html#users.views.ChangePassword">[docs]</a><span class="k">class</span> <span class="nc">ChangePassword</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+<div class="viewcode-block" id="ChangePassword"><a class="viewcode-back" href="../../users.html#users.views.ChangePassword">[문서]</a><span class="k">class</span> <span class="nc">ChangePassword</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    비밀번호 변경 API</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">permission_classes</span> <span class="o">=</span> <span class="p">[</span><span class="n">IsAuthenticated</span><span class="p">]</span>
 
-<div class="viewcode-block" id="ChangePassword.put"><a class="viewcode-back" href="../../users.html#users.views.ChangePassword.put">[docs]</a>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
+<div class="viewcode-block" id="ChangePassword.put"><a class="viewcode-back" href="../../users.html#users.views.ChangePassword.put">[문서]</a>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        비밀번호 변경을 위한 PUT API</span>
 
@@ -219,7 +213,7 @@
         <span class="n">new_password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;new_password&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">new_password</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">old_password</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ParseError</span><span class="p">(</span><span class="n">detail</span><span class="o">=</span><span class="s2">&quot;비밀번호가 일치하지 않습니다.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">check_password</span><span class="p">(</span><span class="n">old_password</span><span class="p">):</span>  <span class="c1"># 로그인한 유저와 old_password가 같다면 비밀번호 변경</span>
+        <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">check_password</span><span class="p">(</span><span class="n">old_password</span><span class="p">):</span>  <span class="c1"># 로그인한 유저pw와 old_password가 같다면 비밀번호 변경</span>
             <span class="n">user</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="n">new_password</span><span class="p">)</span>
             <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
@@ -227,12 +221,12 @@
         <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_200_OK</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="LogIn"><a class="viewcode-back" href="../../users.html#users.views.LogIn">[docs]</a><span class="k">class</span> <span class="nc">LogIn</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+<div class="viewcode-block" id="LogIn"><a class="viewcode-back" href="../../users.html#users.views.LogIn">[문서]</a><span class="k">class</span> <span class="nc">LogIn</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    로그인 API</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="LogIn.post"><a class="viewcode-back" href="../../users.html#users.views.LogIn.post">[docs]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<div class="viewcode-block" id="LogIn.post"><a class="viewcode-back" href="../../users.html#users.views.LogIn.post">[문서]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        사용자 로그인을 위한 POST API</span>
 
@@ -258,14 +252,14 @@
             <span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="LogOut"><a class="viewcode-back" href="../../users.html#users.views.LogOut">[docs]</a><span class="k">class</span> <span class="nc">LogOut</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+<div class="viewcode-block" id="LogOut"><a class="viewcode-back" href="../../users.html#users.views.LogOut">[문서]</a><span class="k">class</span> <span class="nc">LogOut</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    로그아웃 API</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">permission_classes</span> <span class="o">=</span> <span class="p">[</span><span class="n">IsAuthenticated</span><span class="p">]</span>
 
-<div class="viewcode-block" id="LogOut.post"><a class="viewcode-back" href="../../users.html#users.views.LogOut.post">[docs]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<div class="viewcode-block" id="LogOut.post"><a class="viewcode-back" href="../../users.html#users.views.LogOut.post">[문서]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        로그아웃을 위한 POST API</span>
 <span class="sd">        :param request:</span>
@@ -275,34 +269,8 @@
         <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s2">&quot;ok&quot;</span><span class="p">:</span> <span class="s2">&quot;Logout&quot;</span><span class="p">})</span></div></div>
 
 
-<div class="viewcode-block" id="JWTLogin"><a class="viewcode-back" href="../../users.html#users.views.JWTLogin">[docs]</a><span class="k">class</span> <span class="nc">JWTLogin</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    use JWT Login API</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="JWTLogin.post"><a class="viewcode-back" href="../../users.html#users.views.JWTLogin.post">[docs]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
-        <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">)</span>
-        <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">username</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">password</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ParseError</span>
-        <span class="n">user</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span>
-            <span class="n">request</span><span class="p">,</span>
-            <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span>
-            <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="k">if</span> <span class="n">user</span><span class="p">:</span>
-            <span class="n">token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
-                <span class="p">{</span><span class="s2">&quot;pk&quot;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">pk</span><span class="p">},</span>
-                <span class="n">settings</span><span class="o">.</span><span class="n">SECRET_KEY</span><span class="p">,</span>
-                <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;HS256&quot;</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">})</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;wrong password&quot;</span><span class="p">})</span></div></div>
-
-
-<div class="viewcode-block" id="GithubLogIn"><a class="viewcode-back" href="../../users.html#users.views.GithubLogIn">[docs]</a><span class="k">class</span> <span class="nc">GithubLogIn</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
-<div class="viewcode-block" id="GithubLogIn.post"><a class="viewcode-back" href="../../users.html#users.views.GithubLogIn.post">[docs]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<div class="viewcode-block" id="GithubLogIn"><a class="viewcode-back" href="../../users.html#users.views.GithubLogIn">[문서]</a><span class="k">class</span> <span class="nc">GithubLogIn</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+<div class="viewcode-block" id="GithubLogIn.post"><a class="viewcode-back" href="../../users.html#users.views.GithubLogIn.post">[문서]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Github 로그인을 위한 POST API</span>
 
@@ -310,7 +278,6 @@
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;hi&quot;</span><span class="p">)</span>
             <span class="n">code</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">)</span>
             <span class="n">access_token</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;https://github.com/login/oauth/access_token?code=</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="s2">&amp;client_id=b40759dbc613bb53f81d&amp;client_secret=</span><span class="si">{</span><span class="n">settings</span><span class="o">.</span><span class="n">GH_SECRET</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
@@ -355,8 +322,8 @@
             <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_400_BAD_REQUEST</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="KakaoLogIn"><a class="viewcode-back" href="../../users.html#users.views.KakaoLogIn">[docs]</a><span class="k">class</span> <span class="nc">KakaoLogIn</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
-<div class="viewcode-block" id="KakaoLogIn.post"><a class="viewcode-back" href="../../users.html#users.views.KakaoLogIn.post">[docs]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<div class="viewcode-block" id="KakaoLogIn"><a class="viewcode-back" href="../../users.html#users.views.KakaoLogIn">[문서]</a><span class="k">class</span> <span class="nc">KakaoLogIn</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+<div class="viewcode-block" id="KakaoLogIn.post"><a class="viewcode-back" href="../../users.html#users.views.KakaoLogIn.post">[문서]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Kakao 로그인을 위한 POST API</span>
 
@@ -372,7 +339,8 @@
                 <span class="n">data</span><span class="o">=</span><span class="p">{</span>
                     <span class="s2">&quot;grant_type&quot;</span><span class="p">:</span> <span class="s2">&quot;authorization_code&quot;</span><span class="p">,</span>
                     <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="s2">&quot;ec72411cc6b187772440b8c3801b3090&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;redirect_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;http://127.0.0.1:3000/social/kakao&quot;</span><span class="p">,</span>
+                    <span class="c1"># &quot;redirect_uri&quot;: &quot;https://houedu.duckdns.org/social/kakao&quot;,</span>
+                    <span class="s2">&quot;redirect_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;https://127.0.0.1:3000/social/kakao&quot;</span><span class="p">,</span>
                     <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="n">code</span><span class="p">,</span>
                 <span class="p">},</span>
             <span class="p">)</span>
@@ -394,8 +362,6 @@
                 <span class="n">login</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;로그인 성공&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_200_OK</span><span class="p">)</span>
-            <span class="c1"># except Exception(&quot;땡땡&quot;):</span>
-            <span class="c1">#     print(&quot;hi&quot;)</span>
             <span class="k">except</span> <span class="n">User</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;회원가입 시작&quot;</span><span class="p">)</span>
                 <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
@@ -430,23 +396,23 @@
 
 
 
-<h3>Navigation</h3>
+<h3>탐색</h3>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../index.html">Module code</a><ul>
+  <li><a href="../index.html">모듈 코드</a><ul>
   </ul></li>
   </ul></li>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
+  <h3 id="searchlabel">빠른 검색</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
+      <input type="submit" value="이동" />
     </form>
     </div>
 </div>

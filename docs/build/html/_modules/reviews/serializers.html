@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>reviews.serializers &#8212; houedu  문서</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="색인" href="../../genindex.html" />
+    <link rel="search" title="검색" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>reviews.serializers의 소스 코드</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">serializers</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Review</span>
+<span class="kn">from</span> <span class="nn">users.serializers</span> <span class="kn">import</span> <span class="n">UserNickNameSerializer</span>
+<span class="kn">from</span> <span class="nn">courses.inlineSerializers</span> <span class="kn">import</span> <span class="n">CourseNameSerializer</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+
+
+<div class="viewcode-block" id="UserReviewsSerializer"><a class="viewcode-back" href="../../reviews.html#reviews.serializers.UserReviewsSerializer">[문서]</a><span class="k">class</span> <span class="nc">UserReviewsSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    사용자의 리뷰를 조회하는 serializer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">crs</span> <span class="o">=</span> <span class="n">CourseNameSerializer</span><span class="p">(</span><span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<div class="viewcode-block" id="UserReviewsSerializer.Meta"><a class="viewcode-back" href="../../reviews.html#reviews.serializers.UserReviewsSerializer.Meta">[문서]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Review</span>
+        <span class="n">exclude</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,)</span></div></div>
+
+
+<div class="viewcode-block" id="ReviewSerializer"><a class="viewcode-back" href="../../reviews.html#reviews.serializers.ReviewSerializer">[문서]</a><span class="k">class</span> <span class="nc">ReviewSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    모든 리뷰를 조회하는 serializer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">user</span><span class="p">:</span> <span class="n">UserNickNameSerializer</span> <span class="o">=</span> <span class="n">UserNickNameSerializer</span><span class="p">(</span><span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">crs</span><span class="p">:</span> <span class="n">CourseNameSerializer</span> <span class="o">=</span> <span class="n">CourseNameSerializer</span><span class="p">()</span>
+    <span class="n">is_owner</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">SerializerMethodField</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ReviewSerializer.Meta"><a class="viewcode-back" href="../../reviews.html#reviews.serializers.ReviewSerializer.Meta">[문서]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span><span class="p">:</span> <span class="n">Review</span> <span class="o">=</span> <span class="n">Review</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;__all__&quot;</span></div>
+
+<div class="viewcode-block" id="ReviewSerializer.get_is_owner"><a class="viewcode-back" href="../../reviews.html#reviews.serializers.ReviewSerializer.get_is_owner">[문서]</a>    <span class="k">def</span> <span class="nf">get_is_owner</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">review</span><span class="p">):</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">[</span><span class="s2">&quot;request&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">review</span><span class="o">.</span><span class="n">user</span> <span class="o">==</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span></div></div>
+
+
+<div class="viewcode-block" id="CourseDetailReviewSerializer"><a class="viewcode-back" href="../../reviews.html#reviews.serializers.CourseDetailReviewSerializer">[문서]</a><span class="k">class</span> <span class="nc">CourseDetailReviewSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    코스 디테일페이지에 해당 코스의 리뷰를 조회하는 serializer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">user</span><span class="p">:</span> <span class="n">UserNickNameSerializer</span> <span class="o">=</span> <span class="n">UserNickNameSerializer</span><span class="p">(</span><span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">crs</span><span class="p">:</span> <span class="n">CourseNameSerializer</span> <span class="o">=</span> <span class="n">CourseNameSerializer</span><span class="p">()</span>
+
+<div class="viewcode-block" id="CourseDetailReviewSerializer.Meta"><a class="viewcode-back" href="../../reviews.html#reviews.serializers.CourseDetailReviewSerializer.Meta">[문서]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span><span class="p">:</span> <span class="n">Review</span> <span class="o">=</span> <span class="n">Review</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;__all__&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="ReviewStarSerializer"><a class="viewcode-back" href="../../reviews.html#reviews.serializers.ReviewStarSerializer">[문서]</a><span class="k">class</span> <span class="nc">ReviewStarSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    리뷰의 별점을 조회하는 serializer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ReviewStarSerializer.Meta"><a class="viewcode-back" href="../../reviews.html#reviews.serializers.ReviewStarSerializer.Meta">[문서]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span><span class="p">:</span> <span class="n">Review</span> <span class="o">=</span> <span class="n">Review</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;star&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ReviewOnlySerializer"><a class="viewcode-back" href="../../reviews.html#reviews.serializers.ReviewOnlySerializer">[문서]</a><span class="k">class</span> <span class="nc">ReviewOnlySerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Review 정보만 있는 serializer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ReviewOnlySerializer.Meta"><a class="viewcode-back" href="../../reviews.html#reviews.serializers.ReviewOnlySerializer.Meta">[문서]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Review</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="s2">&quot;__all__&quot;</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">houedu</a></h1>
+
+
+
+
+
+
+
+
+<h3>탐색</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">모듈 코드</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">빠른 검색</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="이동" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, yesaroun.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 6.1.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

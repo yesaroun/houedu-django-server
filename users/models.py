@@ -12,7 +12,7 @@ class User(AbstractUser):
         max_length=150,
         editable=False,
     )
-    last_name = models.CharField(
+    last_name: Text = models.CharField(
         max_length=150,
         editable=False,
     )
@@ -21,8 +21,9 @@ class User(AbstractUser):
         max_length=50,
         blank=True,
         null=True,
+        help_text="닉네임 필드",
     )
-    email = models.EmailField(
+    email: Text = models.EmailField(
         blank=False,
         unique=True,
         help_text="이메일 필드",

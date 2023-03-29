@@ -103,16 +103,16 @@ ROOT_URLCONF = "config.urls"
 # 추가
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
-# CORS_ORIGIN_WHITELIST = ["https://houedu.duckdns.org/"]
-# CORS_ORIGIN_REGEX_WHITELIST = ["https://houedu.duckdns.org/"]
-#
-# CORS_ALLOWED_ORIGINS = ["https://houedu.duckdns.org/"]
-# CSRF_TRUSTED_ORIGINS = ["https://houedu.duckdns.org/"]
-CORS_ORIGIN_WHITELIST = ["http://localhost:3000"]
-CORS_ORIGIN_REGEX_WHITELIST = ["http://localhost:3000"]
+CORS_ORIGIN_WHITELIST = ["https://houedu.duckdns.org/"]
+CORS_ORIGIN_REGEX_WHITELIST = ["https://houedu.duckdns.org/"]
 
-CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:3000"]
-CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:3000"]
+CORS_ALLOWED_ORIGINS = ["https://houedu.duckdns.org/"]
+CSRF_TRUSTED_ORIGINS = ["https://houedu.duckdns.org/"]
+# CORS_ORIGIN_WHITELIST = ["http://localhost:3000"]
+# CORS_ORIGIN_REGEX_WHITELIST = ["http://localhost:3000"]
+#
+# CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:3000"]
+# CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:3000"]
 
 TEMPLATES = [
     {

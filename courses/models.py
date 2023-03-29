@@ -27,14 +27,10 @@ class Course(models.Model):
         null=True,
         help_text="코스에 대한 설명, 없는 경우 Null",
     )
-    thumbnail: Optional[Text] = models.TextField(
+    crs_goal: Optional[Text] = models.TextField(
         blank=True,
         null=True,
-        help_text="코스의 썸네일 이미지 URL, 없는 경우 Null",
-    )
-    price: int = models.PositiveIntegerField(
-        default=0,
-        help_text="코스의 가격",
+        help_text="코스 목표, 없는 경우 Null",
     )
     category = models.ForeignKey(
         "categories.Category",
@@ -44,10 +40,14 @@ class Course(models.Model):
         related_name="courses",
         help_text="코스의 카테고리",
     )
-    crs_goal: Optional[Text] = models.TextField(
+    price: int = models.PositiveIntegerField(
+        default=0,
+        help_text="코스의 가격",
+    )
+    thumbnail: Optional[Text] = models.TextField(
         blank=True,
         null=True,
-        help_text="코스 목표, 없는 경우 Null",
+        help_text="코스의 썸네일 이미지 URL, 없는 경우 Null",
     )
     crs_content: Optional[Text] = models.TextField(
         blank=True,

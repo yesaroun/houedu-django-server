@@ -1,7 +1,7 @@
-users
-=====
+courses
+=======
 
 .. toctree::
    :maxdepth: 4
 
-   users
+   courses

@@ -11,7 +11,6 @@ from reviews.serializers import ReviewOnlySerializer, ReviewSerializer
 from reviews.models import Review
 from .models import User
 from typing import Union
-import jwt
 import requests
 
 
@@ -52,7 +51,6 @@ class MyInfo(APIView):
     """
 
     permission_classes = [IsAuthenticated]
-    # 로그인 여부 확인
 
     def get(self, request: HttpRequest) -> HttpResponse:
         """
@@ -181,7 +179,7 @@ class ChangePassword(APIView):
         new_password: str = request.data.get("new_password")
         if not new_password or not old_password:
             raise ParseError(detail="비밀번호가 일치하지 않습니다.")
-        if user.check_password(old_password):  # 로그인한 유저와 old_password가 같다면 비밀번호 변경
+        if user.check_password(old_password):  # 로그인한 유저pw와 old_password가 같다면 비밀번호 변경
             user.set_password(new_password)
             user.save()
         else:
@@ -307,8 +305,8 @@ class KakaoLogIn(APIView):
                 data={
                     "grant_type": "authorization_code",
                     "client_id": "ec72411cc6b187772440b8c3801b3090",
-                    # "redirect_uri": "https://houedu.duckdns.org/social/kakao",
-                    "redirect_uri": "https://127.0.0.1:3000/social/kakao",
+                    "redirect_uri": "https://houedu.duckdns.org/social/kakao",
+                    # "redirect_uri": "https://127.0.0.1:3000/social/kakao",
                     "code": code,
                 },
             )

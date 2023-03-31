@@ -87,10 +87,10 @@ THIRD_PARTY_APPS: list = [
 INSTALLED_APPS: list = SYSTEM_APPS + CUSTOM_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -103,10 +103,10 @@ ROOT_URLCONF = "config.urls"
 # 추가
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-# CORS_ORIGIN_WHITELIST = ["http://houedu-react.s3-website.ap-northeast-2.amazonaws.com"]
-# CORS_ORIGIN_REGEX_WHITELIST = [
-#     "http://houedu-react.s3-website.ap-northeast-2.amazonaws.com"
-# ]
+CORS_ORIGIN_WHITELIST = ["http://houedu-react.s3-website.ap-northeast-2.amazonaws.com"]
+CORS_ORIGIN_REGEX_WHITELIST = [
+    "http://houedu-react.s3-website.ap-northeast-2.amazonaws.com"
+]
 
 CORS_ALLOWED_ORIGINS = ["http://houedu-react.s3-website.ap-northeast-2.amazonaws.com"]
 CSRF_TRUSTED_ORIGINS = ["http://houedu-react.s3-website.ap-northeast-2.amazonaws.com"]

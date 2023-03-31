@@ -305,8 +305,9 @@ class KakaoLogIn(APIView):
                 data={
                     "grant_type": "authorization_code",
                     "client_id": "ec72411cc6b187772440b8c3801b3090",
-                    "redirect_uri": "https://houedu.duckdns.org/social/kakao",
+                    # "redirect_uri": "https://houedu.duckdns.org/social/kakao",
                     # "redirect_uri": "https://127.0.0.1:3000/social/kakao",
+                    "redirect_uri": "http://houedu-react.s3-website.ap-northeast-2.amazonaws.com/social/kakao",
                     "code": code,
                 },
             )

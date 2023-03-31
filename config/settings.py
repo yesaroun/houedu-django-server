@@ -101,7 +101,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = "config.urls"
 
 # 추가
-# CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 # CORS_ORIGIN_WHITELIST = ["http://houedu-react.s3-website.ap-northeast-2.amazonaws.com"]
 # CORS_ORIGIN_REGEX_WHITELIST = [

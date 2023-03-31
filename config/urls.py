@@ -20,7 +20,7 @@ schema_view = get_schema_view(
 
 urlpatterns: List[URLPattern] = [
     path("admin/", admin.site.urls),
-    path("", views.index, name="index"),
+    # path("", views.index, name="index"),
     path(
         "api/v1/",
         include(

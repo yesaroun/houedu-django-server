@@ -108,8 +108,8 @@ CORS_ALLOW_CREDENTIALS = True
 #     "http://houedu-react.s3-website.ap-northeast-2.amazonaws.com"
 # ]
 #
-# CORS_ALLOWED_ORIGINS = ["http://houedu-react.s3-website.ap-northeast-2.amazonaws.com"]
-# CSRF_TRUSTED_ORIGINS = ["http://houedu-react.s3-website.ap-northeast-2.amazonaws.com"]
+CORS_ALLOWED_ORIGINS = ["http://houedu-react.s3-website.ap-northeast-2.amazonaws.com"]
+CSRF_TRUSTED_ORIGINS = ["http://houedu-react.s3-website.ap-northeast-2.amazonaws.com"]
 CORS_ALLOW_METHODS = [
     "DELETE",
     "GET",
@@ -132,8 +132,8 @@ CORS_ALLOW_HEADERS = [
 # CORS_ORIGIN_WHITELIST = ["http://localhost:3000"]
 # CORS_ORIGIN_REGEX_WHITELIST = ["http://localhost:3000"]
 
-CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:3000"]
-CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:3000"]
+# CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:3000"]
+# CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:3000"]
 
 TEMPLATES = [
     {

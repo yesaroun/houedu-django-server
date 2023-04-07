@@ -3,7 +3,12 @@
 
 ### 목차
 
-
+- [프로젝트 요약](https://github.com/yesaroun/houedu-django-server#프로젝트-요약)
+- [팀 노션 페이지](https://github.com/yesaroun/houedu-django-server#반장님들-팀-노션-페이지)
+- [Database 구조](https://github.com/yesaroun/houedu-django-server#database-구조)
+- [Django Model](https://github.com/yesaroun/houedu-django-server#django-model)
+  - [Users Model](https://github.com/yesaroun/houedu-django-server#users-model)
+- [API 설계 및 구조](https://github.com/yesaroun/houedu-django-server#api-설계-및-구조)
 <hr>
 
 ## 프로젝트 요약

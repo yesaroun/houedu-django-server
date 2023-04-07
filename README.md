@@ -3,6 +3,7 @@
 
 ### 목차
 
+
 <hr>
 
 ## 프로젝트 요약
@@ -56,16 +57,6 @@
 - 강의실 프론트엔드/백엔드 개발
 
 <hr>
-
-# Database 구조 및 Django Model 
-
-[Database 구조 및 Django Model(Notion)](https://www.notion.so/Database-Django-Model-455c2ea84c694913926ce822d07903be)
-
-<hr>
-
-# API 설계 및 구조
-
-[API 설계 및 구조(Notion)](https://www.notion.so/API-1298b29012ce42e9b1cf30fd9386b8c4)
 
 <hr>
 
@@ -123,6 +114,8 @@ user의 구매 여부를 확인하는 ‘user_course’테이블과 유저가 �
 왜냐하면 저희가 구현하는 강의 디테일 페이지의 경우는 강의 정보를 하나의 이미지 파일로 넣는 일반적인 방식이 아닌, 직접 파트를 나눠 구현하다 보니, 상세 정보를 직접 다룰 필요가 있었습니다. 그래서 해당하는 데이터를 저장할 컬럼을 나누었습니다.
 
 ---
+
+<hr>
 
 # Django Model
 
@@ -408,3 +401,9 @@ class UserCourse(models.Model):
         managed = True
         db_table = "user_course"
 ```
+
+<hr>
+
+# API 설계 및 구조
+
+## test

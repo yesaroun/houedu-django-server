@@ -120,7 +120,6 @@ user의 구매 여부를 확인하는 ‘user_course’테이블과 유저가 �
 
 ---
 
-<hr>
 
 # Django Model
 
@@ -164,7 +163,7 @@ DATABASES = {
 예를 들어 2월 31일 과 같은 유효하지 않은 날짜 거부 등 테이블에 대해 지정된 유효성 검사 규칙을 위반하는 경우 값을 거부합니다.
 - **이렇게 옵션을 지정하면 DB에 올바르지 않은 데이터나 유효하지 않은 데이터가 삽입되거나 업데이트 되어 데이터가 손상되는 것을 방지할 수 있습니다.**
 
-## Users Model
+## users Model
 
 > users/models.py class User
 
@@ -224,190 +223,174 @@ Meta 클래스의 db_table 옵션을 지정해서 테이블 명을 장고에서 
 
 [Django Model에서의 Meta 클래스](https://yesaroun.tistory.com/entry/Django-Model에서의-Meta-클래스)
 
-### users/models.py 코드 전문
+
+### [나머지 users model](https://github.com/yesaroun/houedu-django-server/blob/main/users/models.py)
+
+다른 클래스들은 User 클래스와 비슷하며, 
+조금 다른 점은 Meta 클래스의 옵션으로 ‘managed’를 사용해서 mysql 테이블을 직접 수정할 수있게 하였고, ‘verbose_name_plural’ 옵션을 추가해 장고 admin에서 확인할 수 있는 복수 명을 지정하였습니다.
 
 ```python
-from django.db import models
-from django.contrib.auth.models import AbstractUser
-from typing import Optional, Text
-
-class User(AbstractUser):
-    """
-    사용자를 나타내는 모델
-    """
-
-    first_name: Text = models.CharField(
-        max_length=150,
-        editable=False,
-    )
-    last_name: Text = models.CharField(
-        max_length=150,
-        editable=False,
-    )
-    nickname: Optional[Text] = models.CharField(
-        unique=True,
-        max_length=50,
-        blank=True,
-        null=True,
-        help_text="닉네임 필드",
-    )
-    email: Text = models.EmailField(
-        blank=False,
-        unique=True,
-        help_text="이메일 필드",
-    )
-    user_img: Optional[Text] = models.TextField(
-        blank=True,
-        null=True,
-        help_text="사용자 이미지 URL 필드",
-    )
-
-    class Meta:
-        db_table = "user"
-
-    def __str__(self) -> Text:
-        """
-        사용자의 문자열 표현 반환
-
-        :return: 사용자 문자열
-        """
-        return f"{str(self.id)} {self.nickname}"
-
-class Teacher(models.Model):
-    """
-    강사를 나타내는 모델
-    """
-
-    user: User = models.OneToOneField(
-        User,
-        models.DO_NOTHING,
-        blank=True,
-        null=True,
-        related_name="teachers",
-        help_text="강사인 유저, 1대1관계",
-    )
-    tcr_name: Text = models.CharField(
-        max_length=50,
-        help_text="강사 이름 필드",
-    )
-    tcr_info: Optional[Text] = models.TextField(
-        blank=True,
-        null=True,
-        help_text="강사 정보 필드",
-    )
-    tcr_img: Optional[Text] = models.TextField(
-        blank=True,
-        null=True,
-        help_text="강사 이미지 URL 필드",
-    )
-    tcr_career: Optional[Text] = models.TextField(
-        blank=True,
-        null=True,
-        help_text="강사 경력 필드",
-    )
-
-    class Meta:
-        managed = True
-        db_table = "teacher"
-
-    def __str__(self) -> Text:
-        """
-        강사 이름 반환
-
-        :return: 강사 이름
-        """
-        return self.tcr_name
-
-class UserCourse(models.Model):
-    """
-    사용자가 수강한 강의들을 나타내는 모델
-    """
-
-    user: User = models.ForeignKey(
-        User,
-        models.DO_NOTHING,
-        related_name="userCourses",
-        help_text="강의를 수강한 사용자 필드",
-    )
-    course = models.ForeignKey(
-        "courses.Course",
-        models.DO_NOTHING,
-        related_name="userCourses",
-        help_text="수강한 강의 필드",
-    )
-
-    class Meta:
-        managed = True
-        db_table = "user_course"
-
 class VideoWatches(models.Model):
     """
     사용자가 시청한 동영상들을 나타내는 모델
     """
-
-    user: Optional[User] = models.ForeignKey(
-        User,
-        models.DO_NOTHING,
-        blank=True,
-        null=True,
-        related_name="videoWatches",
-        help_text="시청한 유저 필드",
-    )
-    lecture = models.ForeignKey(
-        "courses.Lecture",
-        models.DO_NOTHING,
-        blank=True,
-        null=True,
-        related_name="videoWatches",
-        help_text="시청한 강좌 필드",
-    )
-    isfullywatched: Optional[bool] = models.BooleanField(
-        db_column="isFullyWatched",
-        blank=True,
-        null=True,
-        help_text="시청 여부 필드",
-    )
-
+    
+    # 중략
+    
     class Meta:
         managed = True
         db_table = "video_watches"
         verbose_name_plural = "Video Watches"
 ```
 
-다른 클래스들은 User 클래스와 비슷하며, 
-조금 다른 점은 Meta 클래스의 옵션으로 ‘managed’를 사용해서 mysql 테이블을 직접 수정할 수있게 하였고, ‘verbose_name_plural’ 옵션을 추가해 장고 admin에서 확인할 수 있는 복수 명을 지정하였습니다.
-
 - Teacher 클래스 : User의 계정이면서 추가적으로 Teacher 계정 정보를 갖을 수 있도록, user의 id를 FK로 갖습니다.
-- UserCourse 클래스 : 수강 신청을 누르면 
+- UserCourse 클래스 : 수강 신청을 누르면 'user_course' 테이블에 user의 id와 course의 id를 왜래키로 받도록 하였습니다.
 
+<hr>
 
-## UserCourse Model
+## common Model
 
 ```python
-class UserCourse(models.Model):
+class CommonModel(models.Model):
     """
-    사용자가 수강한 강의들을 나타내는 모델
+    생성 및 업데이트 날짜와 시간을 나타내는 Common 필드
     """
 
-    user: User = models.ForeignKey(
-        User,
-        models.DO_NOTHING,
-        related_name="userCourses",
-        help_text="강의를 수강한 사용자 필드",
+    created_at: datetime = models.DateTimeField(
+        auto_now_add=True,
+        help_text="생성 날짜 및 시간",
     )
-    course = models.ForeignKey(
-        "courses.Course",
-        models.DO_NOTHING,
-        related_name="userCourses",
-        help_text="수강한 강의 필드",
+    updated_at: datetime = models.DateTimeField(
+        auto_now=True,
+        blank=True,
+        null=True,
+        help_text="수정 날짜 및 시간",
     )
 
     class Meta:
-        managed = True
-        db_table = "user_course"
+        abstract: bool = True 
 ```
 
+생성 시간과 수정 시간은 다른 클래스에서도 중복적으로 사용되기에 common app을 생성해서 추상 모델을 생성한 이후 다른 모델에서 상속받도록 설계하였습니다.
+
+Meta 클래스의 abstract 속성을 True로 설정해 Django가 이 모델에 대한 DB 테이블을 생성하지 않도록 처리하였습니다.
+
 <hr>
+
+## courses Model
+
+### Course class
+
+```python
+class Course(models.Model):
+    """
+    Course를 나타내는 모델
+    """
+
+    tcr: Optional[Teacher] = models.ForeignKey(
+        "users.Teacher",
+        models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name="courses",
+        help_text="코스에 연간된 강사, 없는 경우 Null",
+    )
+    
+    # 중략
+    
+    crs_content: Optional[Text] = models.TextField(
+        blank=True,
+        null=True,
+        help_text="코스 콘텐츠에 대한 정보, 없는 경우 Null",
+    )
+
+    class Meta:
+        managed: bool = True
+        db_table: str = "course"
+
+    def __str__(self) -> Text:
+        """
+        코스 이름 반환
+        :return: 코스 이름
+        """
+        return self.crs_name
+
+    def count_reviews(self) -> int:
+        """
+        리뷰 수 세기
+        :return: 리뷰 수
+        """
+        count: int = self.reviews.count()
+        return count
+
+    def rating(self) -> float:
+        """
+        코스의 평점 평균 계산
+        :return: 코스 평균 평점
+        """
+        count = self.count_reviews()
+        if count == 0:
+            return 0.0
+        else:
+            total_rating: int = 0
+            for review in self.reviews.all().values(
+                "star"
+            ):  # type: QuerySet[dict[str, int]]
+                total_rating += review["star"]
+            return round(total_rating / count, 2)
+```
+Course 모델에서 'count_reviews', 'rating' 메서드를 정의하였습니다.
+
+이후에 설명할 serializers.py에서 활용되는 메서드들로, 'count_reviews'는 리뷰의 수를 리턴하고, 'rating'메서드는 'count_reivews'를 활용해서 코스의 리뷰 평균을 계산해 리턴합니다.
+
+## reviews Model
+
+### Review class
+
+```python
+class Review(CommonModel):
+    """
+    코스의 리뷰를 나타내는 모델
+    """
+
+    class StarChoices(models.IntegerChoices):
+        """
+        리뷰에서 별점을 정의하는 클래스
+        """
+
+        ONE_STAR = 1, _("★")
+        TWO_STAR = 2, _("★★")
+        THREE_STAR = 3, _("★★★")
+        FOUR_STAR = 4, _("★★★★")
+        FIVE_STAR = 5, _("★★★★★")
+
+    # 중략
+    
+    star: Optional[int] = models.IntegerField(
+        blank=True,
+        null=True,
+        choices=StarChoices.choices,
+        help_text="리뷰 별점, 없으면 Null",
+    )
+    content: Text = models.TextField(
+        help_text="리뷰 내용",
+    )
+
+    class Meta:
+        managed: bool = True
+        db_table: str = "review"
+
+    def __str__(self) -> Text:
+        """
+        리뷰의 문자열 표현 반환
+        :return: 리뷰 문자열
+        """
+        return f"{self.user}의 {self.crs} 리뷰"
+```
+
+Review 클래스에서 선언된 필드 중 star 필드는 choices 속성을 활용합니다. choices속성은 StarChoices클래스에 정의된 값만 허용하도록 합니다.
+
+StarChoices 클래스는 정수만 저장할 수 있는 IntegerChoices 클래스를 상속받았고, 1~5사이의 정수값만 선택할 수 있도록 정의하였습니다.
 
 # API 설계 및 구조
 

@@ -7,7 +7,11 @@
 - [팀 노션 페이지](https://github.com/yesaroun/houedu-django-server#반장님들-팀-노션-페이지)
 - [Database 구조](https://github.com/yesaroun/houedu-django-server#database-구조)
 - [Django Model](https://github.com/yesaroun/houedu-django-server#django-model)
-  - [Users Model](https://github.com/yesaroun/houedu-django-server#users-model)
+  - [setting](https://github.com/yesaroun/houedu-django-server#세팅) 
+  - [users Model](https://github.com/yesaroun/houedu-django-server#users-model)
+  - [common Model](https://github.com/yesaroun/houedu-django-server#common-model)
+  - [courses Model](https://github.com/yesaroun/houedu-django-server#courses-model)
+  - [reviews Model](https://github.com/yesaroun/houedu-django-server#reviews-model)
 - [API 설계 및 구조](https://github.com/yesaroun/houedu-django-server#api-설계-및-구조)
 <hr>
 
@@ -394,4 +398,8 @@ StarChoices 클래스는 정수만 저장할 수 있는 IntegerChoices 클래스
 
 # API 설계 및 구조
 
-## test
+![md-img/img_4.png](md-img/img_4.png)
+
+![md-img/img_5.png](md-img/img_5.png)
+
+## 
